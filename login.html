@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SuukieAI — Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --ink:#0f0e0d; --ink2:#4a4845; --ink3:#9a9794;
+  --bg:#faf9f7; --bg2:#f2f0ec; --bg3:#e8e5df;
+  --accent:#5b4ef8; --accent2:#4338ca; --accent-mid:#7c6ff9; --accent-light:#ede9ff;
+  --success:#1a7a4a; --success-light:#e3f5ec;
+  --danger:#c0392b; --danger-light:#fdecea;
+  --border:rgba(15,14,13,0.1);
+  --radius:14px; --radius-sm:8px;
+  --font-d:'Instrument Serif',Georgia,serif;
+  --font-b:'DM Sans',sans-serif;
+  --shadow:0 1px 3px rgba(15,14,13,0.08),0 4px 16px rgba(15,14,13,0.06);
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ height:100%; }
+body{
+  background:var(--bg); font-family:var(--font-b); color:var(--ink);
+  min-height:100vh; display:flex; align-items:center; justify-content:center; padding:1.5rem;
+}
+.bg-dots{
+  position:fixed; inset:0;
+  background-image:radial-gradient(circle,rgba(91,78,248,0.06) 1px,transparent 1px);
+  background-size:28px 28px; pointer-events:none; z-index:0;
+}
+.container{ position:relative; z-index:1; width:100%; max-width:420px; }
+.back-link{
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:13px; color:var(--ink3); text-decoration:none;
+  margin-bottom:1.5rem; transition:color .15s;
+}
+.back-link:hover{ color:var(--ink); }
+.brand{ text-align:center; margin-bottom:2rem; }
+.brand-logo{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:52px; height:52px; border-radius:16px;
+  background:var(--accent); margin-bottom:14px;
+}
+.brand-logo svg{ width:26px; height:26px; fill:none; stroke:#fff; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.brand-name{ font-family:var(--font-d); font-size:32px; font-weight:400; color:var(--ink); font-style:italic; letter-spacing:-.5px; margin-bottom:4px; }
+.brand-name span{ color:var(--accent); }
+.brand-tag{ font-size:13px; color:var(--ink3); font-weight:300; }
+.card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:2rem; }
+.tabs{ display:flex; gap:4px; background:var(--bg2); border-radius:var(--radius-sm); padding:4px; margin-bottom:1.75rem; }
+.tab{ flex:1; text-align:center; font-size:13px; font-weight:500; padding:8px; border-radius:6px; cursor:pointer; color:var(--ink3); transition:all .18s; border:none; background:transparent; font-family:var(--font-b); }
+.tab.active{ background:#fff; color:var(--ink); box-shadow:0 1px 4px rgba(15,14,13,0.1); }
+.form-section{ display:none; }
+.form-section.active{ display:block; }
+.field{ margin-bottom:1.1rem; }
+.field label{ display:block; font-size:12px; font-weight:500; color:var(--ink2); margin-bottom:6px; }
+.field input{
+  width:100%; padding:11px 14px; font-size:14px; color:var(--ink);
+  background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm);
+  outline:none; font-family:var(--font-b); transition:border-color .15s, background .15s;
+}
+.field input:focus{ border-color:var(--accent-mid); background:#fff; box-shadow:0 0 0 3px rgba(91,78,248,0.08); }
+.field input::placeholder{ color:var(--ink3); font-size:13px; }
+.forgot{ text-align:right; margin-top:-6px; margin-bottom:1rem; font-size:12px; color:var(--accent); cursor:pointer; }
+.forgot:hover{ text-decoration:underline; }
+.submit-btn{
+  width:100%; padding:12px; background:var(--accent); color:#fff;
+  font-size:14px; font-weight:500; border:none; border-radius:var(--radius-sm);
+  cursor:pointer; font-family:var(--font-b);
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  transition:background .15s, transform .1s;
+}
+.submit-btn:hover{ background:var(--accent2); }
+.submit-btn:active{ transform:scale(0.99); }
+.submit-btn:disabled{ background:var(--ink3); cursor:not-allowed; }
+.alert{ border-radius:var(--radius-sm); padding:11px 14px; font-size:13px; line-height:1.5; margin-bottom:1rem; display:none; }
+.alert.error{ background:var(--danger-light); color:var(--danger); border:1px solid rgba(192,57,43,0.15); }
+.alert.success{ background:var(--success-light); color:var(--success); border:1px solid rgba(26,122,74,0.15); }
+.alert.show{ display:block; }
+.spinner{ width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin .6s linear infinite; display:none; }
+@keyframes spin{ to{ transform:rotate(360deg); } }
+.success-screen{ display:none; text-align:center; padding:1rem 0; }
+.success-screen.show{ display:block; }
+.success-icon{ width:56px; height:56px; border-radius:50%; background:var(--success-light); display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; font-size:24px; }
+.success-screen h3{ font-size:18px; font-weight:500; color:var(--ink); margin-bottom:6px; }
+.success-screen p{ font-size:13px; color:var(--ink2); line-height:1.6; }
+.features{ margin-top:2rem; display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.feat{ background:#fff; border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 10px; text-align:center; }
+.feat-icon{ font-size:18px; margin-bottom:6px; }
+.feat-title{ font-size:12px; font-weight:500; color:var(--ink); margin-bottom:2px; }
+.feat-sub{ font-size:11px; color:var(--ink3); }
+</style>
+</head>
+<body>
+<div class="bg-dots"></div>
+<div class="container">
+
+  <a class="back-link" href="index.html">← Back to home</a>
+
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    </div>
+    <div class="brand-name">Suukie<span>AI</span></div>
+    <div class="brand-tag">Generate winning ad copy in seconds</div>
+  </div>
+
+  <div class="card">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('login')">Sign in</button>
+      <button class="tab" onclick="switchTab('signup')">Create account</button>
+    </div>
+
+    <div id="alert" class="alert"></div>
+
+    <div id="login-section" class="form-section active">
+      <div class="success-screen" id="login-success">
+        <div class="success-icon">✓</div>
+        <h3>Welcome back!</h3>
+        <p>Redirecting you to SuukieAI...</p>
+      </div>
+      <div id="login-form">
+        <div class="field">
+          <label>Email address</label>
+          <input type="email" id="login-email" placeholder="you@example.com"/>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="Your password"/>
+        </div>
+        <div class="forgot" onclick="forgotPassword()">Forgot password?</div>
+        <button class="submit-btn" id="login-btn" onclick="handleLogin()">
+          <div class="spinner" id="login-spinner"></div>
+          <span id="login-btn-text">Sign in to SuukieAI</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="signup-section" class="form-section">
+      <div class="success-screen" id="signup-success">
+        <div class="success-icon">✉</div>
+        <h3>Check your inbox!</h3>
+        <p>We sent a confirmation link to<br><strong id="confirm-email"></strong><br><br>Click it to activate your SuukieAI account.</p>
+      </div>
+      <div id="signup-form">
+        <div class="field">
+          <label>Full name</label>
+          <input type="text" id="signup-name" placeholder="Your name"/>
+        </div>
+        <div class="field">
+          <label>Email address</label>
+          <input type="email" id="signup-email" placeholder="you@example.com"/>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="signup-password" placeholder="Min. 8 characters"/>
+        </div>
+        <button class="submit-btn" id="signup-btn" onclick="handleSignup()">
+          <div class="spinner" id="signup-spinner"></div>
+          <span id="signup-btn-text">Create free account</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feat"><div class="feat-icon">⚡</div><div class="feat-title">5 ad variations</div><div class="feat-sub">Per generation</div></div>
+    <div class="feat"><div class="feat-icon">🎯</div><div class="feat-title">3 platforms</div><div class="feat-sub">FB, IG, Google</div></div>
+    <div class="feat"><div class="feat-icon">✦</div><div class="feat-title">GPT-4o powered</div><div class="feat-sub">Pro quality copy</div></div>
+  </div>
+
+</div>
+
+<script>
+var SUPABASE_URL = 'https://wqhyeuchtzahchrgtksu.supabase.co';
+var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxaHlldWNodHphaGNocmd0a3N1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NzE2NzQsImV4cCI6MjA5NTQ0NzY3NH0.fdlEvt7MsM2Wbdg5yUWJC0xAH8Pq5-YvWLvEXTnWgUI';
+
+var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+sb.auth.onAuthStateChange(function(event, session) {
+  if (event === 'SIGNED_IN' && session) {
+    document.getElementById('login-success').classList.add('show');
+    document.getElementById('login-form').style.display = 'none';
+    setTimeout(function() {
+      window.location.href = 'app.html';
+    }, 1200);
+  }
+});
+
+function switchTab(tab) {
+  var isLogin = tab === 'login';
+  var tabs = document.querySelectorAll('.tab');
+  tabs[0].classList.toggle('active', isLogin);
+  tabs[1].classList.toggle('active', !isLogin);
+  document.getElementById('login-section').classList.toggle('active', isLogin);
+  document.getElementById('signup-section').classList.toggle('active', !isLogin);
+  hideAlert();
+}
+
+function showAlert(msg, type) {
+  var el = document.getElementById('alert');
+  el.textContent = msg;
+  el.className = 'alert ' + type + ' show';
+}
+
+function hideAlert() {
+  document.getElementById('alert').className = 'alert';
+}
+
+function setLoading(form, loading) {
+  var btn = document.getElementById(form + '-btn');
+  var spinner = document.getElementById(form + '-spinner');
+  var text = document.getElementById(form + '-btn-text');
+  btn.disabled = loading;
+  spinner.style.display = loading ? 'block' : 'none';
+  if (form === 'login') {
+    text.textContent = loading ? 'Signing in...' : 'Sign in to SuukieAI';
+  } else {
+    text.textContent = loading ? 'Creating account...' : 'Create free account';
+  }
+}
+
+async function handleLogin() {
+  var email = document.getElementById('login-email').value.trim();
+  var password = document.getElementById('login-password').value;
+  if (!email || !password) { showAlert('Please fill in all fields', 'error'); return; }
+  setLoading('login', true);
+  hideAlert();
+  var result = await sb.auth.signInWithPassword({ email: email, password: password });
+  setLoading('login', false);
+  if (result.error) { showAlert(result.error.message, 'error'); }
+}
+
+async function handleSignup() {
+  var name = document.getElementById('signup-name').value.trim();
+  var email = document.getElementById('signup-email').value.trim();
+  var password = document.getElementById('signup-password').value;
+  if (!name || !email || !password) { showAlert('Please fill in all fields', 'error'); return; }
+  if (password.length < 8) { showAlert('Password must be at least 8 characters', 'error'); return; }
+  setLoading('signup', true);
+  hideAlert();
+  var result = await sb.auth.signUp({
+    email: email, password: password,
+    options: { data: { full_name: name } }
+  });
+  setLoading('signup', false);
+  if (result.error) { showAlert(result.error.message, 'error'); return; }
+  document.getElementById('confirm-email').textContent = email;
+  document.getElementById('signup-success').classList.add('show');
+  document.getElementById('signup-form').style.display = 'none';
+}
+
+async function forgotPassword() {
+  var email = document.getElementById('login-email').value.trim();
+  if (!email) { showAlert('Enter your email address first', 'error'); return; }
+  var result = await sb.auth.resetPasswordForEmail(email);
+  if (result.error) { showAlert(result.error.message, 'error'); return; }
+  showAlert('Password reset email sent — check your inbox', 'success');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    var loginActive = document.getElementById('login-section').classList.contains('active');
+    if (loginActive) { handleLogin(); } else { handleSignup(); }
+  }
+});
+</script>
+</body>
+</html>
