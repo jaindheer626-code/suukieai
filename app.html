@@ -402,7 +402,13 @@ async function init() {
 
 async function loadProfile() {
   var r = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
-  if (r.data) { userProfile = r.data; updateUsageUI(); }
+  if (r.data) {
+    userProfile = r.data;
+  } else {
+    await sb.from('profiles').insert({ id: currentUser.id, email: currentUser.email, plan: 'free', generations_used: 0 });
+    userProfile = { id: currentUser.id, email: currentUser.email, plan: 'free', generations_used: 0 };
+  }
+  updateUsageUI();
 }
 
 function updateUsageUI() {
