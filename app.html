@@ -39,9 +39,18 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .nav-menu-item{ padding:8px 12px; font-size:13px; color:var(--ink2); border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:8px; }
 .nav-menu-item:hover{ background:var(--bg2); }
 .nav-menu-item.danger{ color:var(--danger); }
-.page{ max-width:1100px; margin:0 auto; padding:2rem 1.5rem; display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:start; }
+
+/* TABS */
+.page-tabs{ max-width:1100px; margin:0 auto; padding:1.5rem 1.5rem 0; display:flex; gap:8px; }
+.page-tab{ font-size:13px; font-weight:500; padding:8px 18px; border-radius:20px; border:1px solid var(--border); background:#fff; color:var(--ink2); cursor:pointer; transition:all .15s; }
+.page-tab.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
+
+.page{ max-width:1100px; margin:0 auto; padding:1.5rem; display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:start; }
 @media(max-width:768px){ .page{ grid-template-columns:1fr; } }
-.usage-card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; margin-bottom:1rem; grid-column:1/-1; }
+.tab-content{ display:none; }
+.tab-content.active{ display:contents; }
+
+.usage-card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; margin-bottom:0; grid-column:1/-1; }
 .usage-inner{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
 .usage-text{ flex:1; min-width:200px; }
 .usage-label{ font-size:12px; font-weight:500; color:var(--ink2); margin-bottom:6px; display:flex; justify-content:space-between; }
@@ -51,34 +60,49 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .usage-bar-fill.full{ background:var(--danger); }
 .usage-note{ font-size:11.5px; color:var(--ink3); margin-top:5px; }
 .usage-note.warn{ color:var(--warn); }
-.upgrade-btn-sm{ font-size:12px; font-weight:500; padding:7px 16px; background:var(--accent); color:#fff; border:none; border-radius:20px; cursor:pointer; white-space:nowrap; transition:background .15s; }
-.upgrade-btn-sm:hover{ background:var(--accent2); }
+.upgrade-btn-sm{ font-size:12px; font-weight:500; padding:7px 16px; background:var(--accent); color:#fff; border:none; border-radius:20px; cursor:pointer; white-space:nowrap; }
 .form-card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; box-shadow:var(--shadow); }
 .card-title{ font-family:var(--font-d); font-size:22px; font-style:italic; color:var(--ink); margin-bottom:4px; }
 .card-sub{ font-size:13px; color:var(--ink3); margin-bottom:1.5rem; }
 .field{ margin-bottom:1.1rem; }
 .field label{ display:block; font-size:12px; font-weight:500; color:var(--ink2); margin-bottom:6px; }
 .field label span{ color:var(--danger); }
-.field input,.field textarea{ width:100%; padding:10px 13px; font-size:13.5px; color:var(--ink); background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm); outline:none; font-family:var(--font-b); transition:border-color .15s,background .15s; }
-.field input:focus,.field textarea:focus{ border-color:var(--accent-mid); background:#fff; box-shadow:0 0 0 3px rgba(91,78,248,0.07); }
+.field input,.field textarea,.field select{ width:100%; padding:10px 13px; font-size:13.5px; color:var(--ink); background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm); outline:none; font-family:var(--font-b); transition:border-color .15s; }
+.field input:focus,.field textarea:focus,.field select:focus{ border-color:var(--accent-mid); background:#fff; box-shadow:0 0 0 3px rgba(91,78,248,0.07); }
 .field textarea{ resize:vertical; min-height:78px; line-height:1.6; }
 .field input::placeholder,.field textarea::placeholder{ color:var(--ink3); font-size:13px; }
 .tone-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:6px; }
 .tone-chip{ padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:12.5px; color:var(--ink2); text-align:center; cursor:pointer; transition:all .15s; font-family:var(--font-b); background:var(--bg); }
-.tone-chip:hover{ border-color:var(--accent-mid); background:var(--accent-light); color:var(--accent); }
 .tone-chip.selected{ border-color:var(--accent); background:var(--accent-light); color:var(--accent); font-weight:500; }
 .plat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
 .plat-chip{ padding:9px 8px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:12.5px; color:var(--ink2); text-align:center; cursor:pointer; transition:all .15s; font-family:var(--font-b); background:var(--bg); display:flex; align-items:center; justify-content:center; gap:5px; }
-.plat-chip:hover{ border-color:var(--accent-mid); }
 .plat-chip.selected{ border-color:var(--accent); background:var(--accent-light); color:var(--accent); font-weight:500; }
+
+/* IMAGE STYLES */
+.img-style-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:6px; }
+.img-style-chip{ padding:10px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:12px; color:var(--ink2); text-align:center; cursor:pointer; transition:all .15s; font-family:var(--font-b); background:var(--bg); }
+.img-style-chip .chip-icon{ font-size:18px; margin-bottom:4px; }
+.img-style-chip .chip-label{ font-size:11.5px; font-weight:500; }
+.img-style-chip .chip-sub{ font-size:10.5px; color:var(--ink3); margin-top:2px; }
+.img-style-chip.selected{ border-color:var(--accent); background:var(--accent-light); color:var(--accent); }
+
+/* FORMAT CHIPS */
+.format-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+.format-chip{ padding:8px 6px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:11px; color:var(--ink2); text-align:center; cursor:pointer; transition:all .15s; font-family:var(--font-b); background:var(--bg); }
+.format-chip .fmt-icon{ font-size:16px; margin-bottom:3px; }
+.format-chip .fmt-label{ font-size:11px; font-weight:500; }
+.format-chip .fmt-size{ font-size:10px; color:var(--ink3); }
+.format-chip.selected{ border-color:var(--accent); background:var(--accent-light); color:var(--accent); }
+
 .divider{ height:1px; background:var(--border2); margin:1.25rem 0; }
-.gen-btn{ width:100%; padding:12px; background:var(--accent); color:#fff; font-size:14px; font-weight:500; border:none; border-radius:var(--radius-sm); cursor:pointer; font-family:var(--font-b); display:flex; align-items:center; justify-content:center; gap:8px; transition:background .15s,transform .1s; }
+.gen-btn{ width:100%; padding:12px; background:var(--accent); color:#fff; font-size:14px; font-weight:500; border:none; border-radius:var(--radius-sm); cursor:pointer; font-family:var(--font-b); display:flex; align-items:center; justify-content:center; gap:8px; transition:background .15s; }
 .gen-btn:hover{ background:var(--accent2); }
-.gen-btn:active{ transform:scale(0.99); }
 .gen-btn:disabled{ background:var(--ink3); cursor:not-allowed; }
 .gen-note{ text-align:center; font-size:11.5px; color:var(--ink3); margin-top:8px; }
 .spinner{ width:16px; height:16px; border:2px solid rgba(255,255,255,0.35); border-top-color:#fff; border-radius:50%; animation:spin .6s linear infinite; display:none; }
 @keyframes spin{ to{ transform:rotate(360deg); } }
+
+/* RESULTS */
 .results-card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; box-shadow:var(--shadow); }
 .results-empty{ text-align:center; padding:3rem 1rem; }
 .results-empty-icon{ font-size:36px; margin-bottom:12px; opacity:.4; }
@@ -86,7 +110,7 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .results-head{ display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:1.25rem; }
 .results-title{ font-family:var(--font-d); font-size:20px; font-style:italic; color:var(--ink); }
 .results-sub{ font-size:12px; color:var(--ink3); margin-top:3px; }
-.regen-btn{ font-size:12px; padding:6px 12px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--ink2); cursor:pointer; white-space:nowrap; transition:all .15s; font-family:var(--font-b); }
+.regen-btn{ font-size:12px; padding:6px 12px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--ink2); cursor:pointer; font-family:var(--font-b); }
 .regen-btn:hover{ background:var(--bg2); }
 .ad-card{ border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; margin-bottom:10px; transition:border-color .15s; }
 .ad-card:hover{ border-color:var(--accent-mid); }
@@ -98,18 +122,38 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .ad-copy-btn:hover{ background:var(--bg2); color:var(--ink); }
 .ad-copy-btn.copied{ background:var(--success-light); color:var(--success); border-color:transparent; }
 .ad-text{ font-size:13.5px; color:var(--ink); line-height:1.65; white-space:pre-wrap; }
+
+/* IMAGE RESULTS */
+.img-result-card{ border:1px solid var(--border); border-radius:var(--radius-sm); overflow:hidden; margin-bottom:12px; }
+.img-result-head{ padding:10px 14px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
+.img-result-label{ font-size:12px; font-weight:500; color:var(--ink2); display:flex; align-items:center; gap:6px; }
+.img-actions{ display:flex; gap:6px; }
+.img-dl-btn{ font-size:11px; padding:4px 12px; border-radius:20px; background:var(--accent); color:#fff; border:none; cursor:pointer; font-family:var(--font-b); transition:background .15s; display:flex; align-items:center; gap:4px; }
+.img-dl-btn:hover{ background:var(--accent2); }
+.img-regen-btn{ font-size:11px; padding:4px 10px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--ink3); cursor:pointer; font-family:var(--font-b); }
+.img-regen-btn:hover{ background:var(--bg2); }
+.img-wrap{ position:relative; background:var(--bg2); }
+.img-wrap img{ width:100%; display:block; }
+.img-loading{ padding:3rem; text-align:center; }
+.img-loading-dots{ display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:10px; }
+.img-loading-dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); animation:bounce .8s infinite; }
+.img-loading-dot:nth-child(2){ animation-delay:.15s; }
+.img-loading-dot:nth-child(3){ animation-delay:.3s; }
+@keyframes bounce{ 0%,100%{ transform:translateY(0); opacity:.4; } 50%{ transform:translateY(-6px); opacity:1; } }
+.img-loading-text{ font-size:13px; color:var(--accent); font-weight:500; }
+.img-loading-sub{ font-size:11px; color:var(--ink3); margin-top:4px; }
+
 .loading-card{ border:1px solid var(--accent-mid); border-radius:var(--radius-sm); padding:20px; text-align:center; background:var(--accent-light); }
 .loading-dots{ display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:10px; }
 .loading-dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); animation:bounce .8s infinite; }
 .loading-dot:nth-child(2){ animation-delay:.15s; }
 .loading-dot:nth-child(3){ animation-delay:.3s; }
-@keyframes bounce{ 0%,100%{ transform:translateY(0); opacity:.4; } 50%{ transform:translateY(-6px); opacity:1; } }
 .loading-text{ font-size:13px; color:var(--accent); font-weight:500; }
 .locked-card{ border:1px dashed var(--border); border-radius:var(--radius-sm); padding:20px; text-align:center; margin-bottom:10px; background:var(--bg); }
 .locked-icon{ font-size:22px; margin-bottom:8px; opacity:.5; }
 .locked-text{ font-size:13px; color:var(--ink3); margin-bottom:12px; line-height:1.5; }
 .locked-upgrade{ font-size:12px; font-weight:500; padding:7px 18px; background:var(--accent); color:#fff; border:none; border-radius:20px; cursor:pointer; font-family:var(--font-b); }
-.locked-upgrade:hover{ background:var(--accent2); }
+
 .modal-overlay{ position:fixed; inset:0; background:rgba(15,14,13,0.5); display:none; align-items:center; justify-content:center; z-index:500; padding:1.5rem; backdrop-filter:blur(4px); }
 .modal-overlay.show{ display:flex; }
 .modal{ background:#fff; border-radius:var(--radius); padding:2rem; width:100%; max-width:480px; box-shadow:0 20px 60px rgba(15,14,13,0.15); }
@@ -135,6 +179,7 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 </style>
 </head>
 <body>
+
 <nav class="nav">
   <a class="nav-brand" href="index.html">
     <div class="nav-logo"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
@@ -152,11 +197,18 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
   </div>
 </nav>
 
+<div class="page-tabs">
+  <button class="page-tab active" onclick="switchTab('copy')">✦ Ad Copy</button>
+  <button class="page-tab" onclick="switchTab('image')">🎨 Ad Images</button>
+</div>
+
 <div class="page">
+
+  <!-- USAGE BAR -->
   <div class="usage-card">
     <div class="usage-inner">
       <div class="usage-text" id="usage-text">
-        <div class="usage-label"><span>Generations this month</span><span id="usage-count">0 / 3</span></div>
+        <div class="usage-label"><span id="usage-label-text">Generations this month</span><span id="usage-count">0 / 3</span></div>
         <div class="usage-bar-bg"><div class="usage-bar-fill" id="usage-bar" style="width:0%"></div></div>
         <div class="usage-note" id="usage-note">3 free generations per month</div>
       </div>
@@ -164,64 +216,149 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
     </div>
   </div>
 
-  <div class="form-card">
-    <div class="card-title">Generate ad copy</div>
-    <div class="card-sub">Fill in your product details below</div>
-    <div id="form-alert" class="alert error"></div>
-    <div class="field"><label>Product name <span>*</span></label><input type="text" id="f-product" placeholder="e.g. Nike Air Max 270"/></div>
-    <div class="field"><label>Product description <span>*</span></label><textarea id="f-description" placeholder="Describe your product in 2–3 sentences"></textarea></div>
-    <div class="field"><label>Target audience <span>*</span></label><input type="text" id="f-audience" placeholder="e.g. athletes aged 18-35"/></div>
-    <div class="field">
-      <label>Tone of voice <span>*</span></label>
-      <div class="tone-grid">
-        <div class="tone-chip selected" onclick="selectTone(this)">Professional</div>
-        <div class="tone-chip" onclick="selectTone(this)">Playful</div>
-        <div class="tone-chip" onclick="selectTone(this)">Urgent</div>
-        <div class="tone-chip" onclick="selectTone(this)">Luxury</div>
+  <!-- AD COPY TAB -->
+  <div class="tab-content active" id="tab-copy">
+    <div class="form-card">
+      <div class="card-title">Generate ad copy</div>
+      <div class="card-sub">Fill in your product details below</div>
+      <div id="form-alert" class="alert error"></div>
+      <div class="field"><label>Product name <span>*</span></label><input type="text" id="f-product" placeholder="e.g. Nike Air Max 270"/></div>
+      <div class="field"><label>Product description <span>*</span></label><textarea id="f-description" placeholder="Describe your product in 2–3 sentences"></textarea></div>
+      <div class="field"><label>Target audience <span>*</span></label><input type="text" id="f-audience" placeholder="e.g. athletes aged 18-35"/></div>
+      <div class="field">
+        <label>Tone of voice <span>*</span></label>
+        <div class="tone-grid">
+          <div class="tone-chip selected" onclick="selectTone(this)">Professional</div>
+          <div class="tone-chip" onclick="selectTone(this)">Playful</div>
+          <div class="tone-chip" onclick="selectTone(this)">Urgent</div>
+          <div class="tone-chip" onclick="selectTone(this)">Luxury</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Platforms <span>*</span></label>
+        <div class="plat-grid">
+          <div class="plat-chip selected" onclick="togglePlat(this)" data-plat="Facebook">📘 Facebook</div>
+          <div class="plat-chip" onclick="togglePlat(this)" data-plat="Instagram">📸 Instagram</div>
+          <div class="plat-chip" onclick="togglePlat(this)" data-plat="Google">🔍 Google</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <button class="gen-btn" id="gen-btn" onclick="handleGenerate()">
+        <div class="spinner" id="gen-spinner"></div>
+        <span id="gen-btn-text">✦ Generate my ads</span>
+      </button>
+      <div class="gen-note" id="gen-note">Free plan · 3 generations/month · instant results</div>
+    </div>
+
+    <div class="results-card">
+      <div class="results-empty" id="results-empty">
+        <div class="results-empty-icon">✦</div>
+        <div class="results-empty-text">Your generated ads will<br>appear here instantly</div>
+      </div>
+      <div id="results-content" style="display:none">
+        <div class="results-head">
+          <div><div class="results-title">Your ad variations</div><div class="results-sub" id="results-sub">—</div></div>
+          <button class="regen-btn" onclick="handleGenerate()">↺ Regenerate</button>
+        </div>
+        <div id="ads-list"></div>
       </div>
     </div>
-    <div class="field">
-      <label>Platforms <span>*</span></label>
-      <div class="plat-grid">
-        <div class="plat-chip selected" onclick="togglePlat(this)" data-plat="Facebook">📘 Facebook</div>
-        <div class="plat-chip" onclick="togglePlat(this)" data-plat="Instagram">📸 Instagram</div>
-        <div class="plat-chip" onclick="togglePlat(this)" data-plat="Google">🔍 Google</div>
-      </div>
-    </div>
-    <div class="divider"></div>
-    <button class="gen-btn" id="gen-btn" onclick="handleGenerate()">
-      <div class="spinner" id="gen-spinner"></div>
-      <span id="gen-btn-text">✦ Generate my ads</span>
-    </button>
-    <div class="gen-note" id="gen-note">Free plan · 3 generations/month · instant results</div>
   </div>
 
-  <div class="results-card">
-    <div class="results-empty" id="results-empty">
-      <div class="results-empty-icon">✦</div>
-      <div class="results-empty-text">Your generated ads will<br>appear here instantly</div>
-    </div>
-    <div id="results-content" style="display:none">
-      <div class="results-head">
-        <div><div class="results-title">Your ad variations</div><div class="results-sub" id="results-sub">—</div></div>
-        <button class="regen-btn" onclick="handleGenerate()">↺ Regenerate</button>
+  <!-- IMAGE TAB -->
+  <div class="tab-content" id="tab-image">
+    <div class="form-card">
+      <div class="card-title">Generate ad images</div>
+      <div class="card-sub">Create stunning banners & posters for your product</div>
+      <div id="img-alert" class="alert error"></div>
+      <div class="field"><label>Product name <span>*</span></label><input type="text" id="img-product" placeholder="e.g. Nike Air Max 270"/></div>
+      <div class="field"><label>Product description <span>*</span></label><textarea id="img-description" placeholder="Describe the product — colors, materials, key features" style="min-height:60px"></textarea></div>
+      <div class="field">
+        <label>Image style <span>*</span></label>
+        <div class="img-style-grid">
+          <div class="img-style-chip selected" onclick="selectStyle(this)" data-style="photorealistic product advertisement, studio lighting, clean white background, professional photography">
+            <div class="chip-icon">📸</div>
+            <div class="chip-label">Studio Shot</div>
+            <div class="chip-sub">Clean & professional</div>
+          </div>
+          <div class="img-style-chip" onclick="selectStyle(this)" data-style="lifestyle advertisement photo, natural lighting, people using the product, aspirational and warm">
+            <div class="chip-icon">🌅</div>
+            <div class="chip-label">Lifestyle</div>
+            <div class="chip-sub">Real-world setting</div>
+          </div>
+          <div class="img-style-chip" onclick="selectStyle(this)" data-style="bold graphic design poster, vibrant colors, modern typography, eye-catching social media ad">
+            <div class="chip-icon">🎨</div>
+            <div class="chip-label">Bold Poster</div>
+            <div class="chip-sub">Vibrant & graphic</div>
+          </div>
+          <div class="img-style-chip" onclick="selectStyle(this)" data-style="minimalist elegant advertisement, luxury aesthetic, soft colors, high-end brand photography">
+            <div class="chip-icon">✦</div>
+            <div class="chip-label">Minimalist</div>
+            <div class="chip-sub">Luxury & elegant</div>
+          </div>
+        </div>
       </div>
-      <div id="ads-list"></div>
+      <div class="field">
+        <label>Format <span>*</span></label>
+        <div class="format-grid">
+          <div class="format-chip selected" onclick="selectFormat(this)" data-ratio="1024x1024" data-w="1024" data-h="1024">
+            <div class="fmt-icon">⬛</div>
+            <div class="fmt-label">Square</div>
+            <div class="fmt-size">1:1 · Instagram</div>
+          </div>
+          <div class="format-chip" onclick="selectFormat(this)" data-ratio="1024x1792" data-w="1024" data-h="1792">
+            <div class="fmt-icon">📱</div>
+            <div class="fmt-label">Story</div>
+            <div class="fmt-size">9:16 · Stories/Reels</div>
+          </div>
+          <div class="format-chip" onclick="selectFormat(this)" data-ratio="1792x1024" data-w="1792" data-h="1024">
+            <div class="fmt-icon">🖼️</div>
+            <div class="fmt-label">Banner</div>
+            <div class="fmt-size">16:9 · Facebook/Web</div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Custom prompt (optional)</label>
+        <input type="text" id="img-custom" placeholder="Add any extra details e.g. 'red color theme, sunset background'"/>
+      </div>
+      <div class="divider"></div>
+      <button class="gen-btn" id="img-gen-btn" onclick="handleImageGenerate()">
+        <div class="spinner" id="img-spinner"></div>
+        <span id="img-btn-text">🎨 Generate ad image</span>
+      </button>
+      <div class="gen-note" id="img-gen-note">Free · Powered by AI · ~10 seconds</div>
+    </div>
+
+    <div class="results-card">
+      <div class="results-empty" id="img-results-empty">
+        <div class="results-empty-icon">🎨</div>
+        <div class="results-empty-text">Your generated ad image<br>will appear here</div>
+      </div>
+      <div id="img-results-content" style="display:none">
+        <div class="results-head">
+          <div><div class="results-title">Your ad image</div><div class="results-sub" id="img-results-sub">—</div></div>
+          <button class="regen-btn" onclick="handleImageGenerate()">↺ Regenerate</button>
+        </div>
+        <div id="img-output"></div>
+      </div>
     </div>
   </div>
+
 </div>
 
 <div class="modal-overlay" id="upgrade-modal" onclick="closeModalOutside(event)">
   <div class="modal">
     <div class="modal-title">Upgrade SuukieAI</div>
-    <div class="modal-sub">Unlock unlimited ad generation</div>
+    <div class="modal-sub">Unlock unlimited generations & premium features</div>
     <div class="plan-cards">
       <div class="plan-card">
         <div class="plan-name">Free</div>
         <div class="plan-price">₹0 <span>/mo</span></div>
         <div class="plan-period">Forever free</div>
-        <div class="plan-feat"><span class="plan-feat-check">✓</span> 3 generations/month</div>
-        <div class="plan-feat"><span class="plan-feat-check">✓</span> 3 ad variations</div>
+        <div class="plan-feat"><span class="plan-feat-check">✓</span> 3 ad copy/month</div>
+        <div class="plan-feat"><span class="plan-feat-check">✓</span> 3 images/month</div>
+        <div class="plan-feat"><span class="plan-feat-check">✓</span> 3 variations</div>
         <button class="plan-btn plan-btn-outline">Current plan</button>
       </div>
       <div class="plan-card featured">
@@ -229,8 +366,10 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
         <div class="plan-name" style="color:var(--accent)">Pro</div>
         <div class="plan-price" style="color:var(--accent)">₹299 <span>/mo</span></div>
         <div class="plan-period">or ₹1,999/year</div>
-        <div class="plan-feat"><span class="plan-feat-check">✓</span> Unlimited generations</div>
-        <div class="plan-feat"><span class="plan-feat-check">✓</span> 5 ad variations</div>
+        <div class="plan-feat"><span class="plan-feat-check">✓</span> Unlimited ad copy</div>
+        <div class="plan-feat"><span class="plan-feat-check">✓</span> Unlimited images</div>
+        <div class="plan-feat"><span class="plan-feat-check">✓</span> 5 variations</div>
+        <div class="plan-feat"><span class="plan-feat-check">✓</span> All formats</div>
         <button class="plan-btn plan-btn-solid" onclick="window.location.href='pricing.html'">Upgrade now →</button>
       </div>
     </div>
@@ -243,16 +382,21 @@ var SUPABASE_URL = 'https://wqhyeuchtzahchrgtksu.supabase.co';
 var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxaHlldWNodHphaGNocmd0a3N1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NzE2NzQsImV4cCI6MjA5NTQ0NzY3NH0.fdlEvt7MsM2Wbdg5yUWJC0xAH8Pq5-YvWLvEXTnWgUI';
 var GROQ_API_KEY = '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';
 var FREE_LIMIT = 3;
+var FREE_IMG_LIMIT = 3;
 
 var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 var currentUser = null;
 var userProfile = null;
+var selectedStyle = '';
+var selectedFormat = { w: 1024, h: 1024, ratio: '1024x1024' };
+var currentTab = 'copy';
 
 async function init() {
   var r = await sb.auth.getSession();
   if (!r.data.session) { window.location.href = 'login.html'; return; }
   currentUser = r.data.session.user;
   document.getElementById('avatar-letter').textContent = currentUser.email.charAt(0).toUpperCase();
+  selectedStyle = document.querySelector('.img-style-chip.selected').getAttribute('data-style');
   await loadProfile();
 }
 
@@ -271,6 +415,7 @@ function updateUsageUI() {
     document.getElementById('usage-text').innerHTML = '<div style="font-size:13px;font-weight:500;color:var(--accent)">✦ Pro plan — unlimited generations active</div>';
     document.getElementById('upgrade-btn-sm').style.display = 'none';
     document.getElementById('gen-note').textContent = 'Pro plan · unlimited · instant results';
+    document.getElementById('img-gen-note').textContent = 'Pro plan · unlimited images · all formats';
   } else {
     var pct = Math.min((used / FREE_LIMIT) * 100, 100);
     document.getElementById('usage-count').textContent = used + ' / ' + FREE_LIMIT;
@@ -278,14 +423,27 @@ function updateUsageUI() {
     var note = document.getElementById('usage-note');
     if (used >= FREE_LIMIT) {
       document.getElementById('usage-bar').className = 'usage-bar-fill full';
-      note.textContent = 'Monthly limit reached — upgrade to continue'; note.className = 'usage-note warn';
+      note.textContent = 'Monthly limit reached — upgrade to continue';
+      note.className = 'usage-note warn';
     } else if (used >= FREE_LIMIT - 1) {
       document.getElementById('usage-bar').className = 'usage-bar-fill warn';
-      note.textContent = '1 generation left — upgrade for unlimited'; note.className = 'usage-note warn';
+      note.textContent = '1 generation left — upgrade for unlimited';
+      note.className = 'usage-note warn';
     }
   }
 }
 
+// TAB SWITCHING
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.page-tab').forEach(function(t, i) {
+    t.classList.toggle('active', (tab === 'copy' && i === 0) || (tab === 'image' && i === 1));
+  });
+  document.getElementById('tab-copy').classList.toggle('active', tab === 'copy');
+  document.getElementById('tab-image').classList.toggle('active', tab === 'image');
+}
+
+// AD COPY
 function selectTone(el) {
   document.querySelectorAll('.tone-chip').forEach(function(c){ c.classList.remove('selected'); });
   el.classList.add('selected');
@@ -310,79 +468,40 @@ async function handleGenerate() {
 
   hideFormAlert();
   setGenerating(true);
-  showLoading(product, tone, platforms);
+
+  document.getElementById('results-empty').style.display = 'none';
+  document.getElementById('results-content').style.display = 'block';
+  document.getElementById('results-sub').textContent = product + ' · ' + tone + ' · ' + platforms.join(', ');
+  document.getElementById('ads-list').innerHTML = '<div class="loading-card"><div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div><div class="loading-text">Generating your ads with AI...</div></div>';
 
   var maxAds = isPro ? 5 : 3;
-  var prompt = 'You are an expert ad copywriter. Write exactly ' + maxAds + ' high-converting ad variations.\n\n' +
-    'Product: ' + product + '\n' +
-    'Description: ' + description + '\n' +
-    'Audience: ' + audience + '\n' +
-    'Tone: ' + tone + '\n' +
-    'Platforms: ' + platforms.join(', ') + '\n\n' +
-    'Format each ad exactly like this (include the dashes):\n' +
-    '---\n' +
-    'PLATFORM: [platform name]\n' +
-    'TYPE: [Short/Long/Caption/Story/Headline]\n' +
-    'AD:\n' +
-    '[your ad copy here]\n\n' +
-    'Write ' + maxAds + ' ads total. Make each one unique and compelling.';
+  var prompt = 'You are an expert ad copywriter. Write exactly ' + maxAds + ' high-converting ad variations.\n\nProduct: ' + product + '\nDescription: ' + description + '\nAudience: ' + audience + '\nTone: ' + tone + '\nPlatforms: ' + platforms.join(', ') + '\n\nFormat each ad exactly like this:\n---\nPLATFORM: [platform name]\nTYPE: [Short/Long/Caption/Story/Headline]\nAD:\n[your ad copy here]\n\nWrite ' + maxAds + ' ads total.';
 
   try {
     var response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + GROQ_API_KEY
-      },
-      body: JSON.stringify({
-        model: 'llama-3.1-8b-instant',
-        messages: [{ role: 'user', content: prompt }],
-        max_tokens: 1500,
-        temperature: 0.8
-      })
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_API_KEY },
+      body: JSON.stringify({ model: 'llama-3.1-8b-instant', messages: [{ role: 'user', content: prompt }], max_tokens: 1500, temperature: 0.8 })
     });
 
-    if (!response.ok) {
-      var errData = await response.json();
-      throw new Error(errData.error ? errData.error.message : 'API error ' + response.status);
-    }
-
+    if (!response.ok) { var e = await response.json(); throw new Error(e.error ? e.error.message : 'API error'); }
     var data = await response.json();
     var text = data.choices[0].message.content;
 
-    var newCount = used + 1;
+    var newCount = (userProfile.generations_used || 0) + 1;
     await sb.from('profiles').update({ generations_used: newCount }).eq('id', currentUser.id);
     if (userProfile) userProfile.generations_used = newCount;
     updateUsageUI();
-
-    renderAdCards(text, isPro, product, tone, platforms);
-
+    renderAdCards(text, isPro);
   } catch(err) {
-    document.getElementById('results-empty').style.display = 'none';
-    document.getElementById('results-content').style.display = 'block';
-    document.getElementById('results-sub').textContent = 'Error occurred';
-    document.getElementById('ads-list').innerHTML = '<div class="alert error show">Error: ' + err.message + '<br><br>Please try again in a few seconds.</div>';
-    console.error('Groq error:', err);
+    document.getElementById('ads-list').innerHTML = '<div class="alert error show">Error: ' + err.message + '</div>';
   }
-
   setGenerating(false);
 }
 
-function showLoading(product, tone, platforms) {
-  document.getElementById('results-empty').style.display = 'none';
-  document.getElementById('results-content').style.display = 'block';
-  document.getElementById('results-sub').textContent = product + ' · ' + tone + ' · ' + platforms.join(', ');
-  document.getElementById('ads-list').innerHTML =
-    '<div class="loading-card">' +
-    '<div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>' +
-    '<div class="loading-text">Generating your ads with AI...</div>' +
-    '</div>';
-}
-
-function renderAdCards(text, isPro, product, tone, platforms) {
+function renderAdCards(text, isPro) {
   var adsList = document.getElementById('ads-list');
   adsList.innerHTML = '';
-
   var sections = text.split('---').filter(function(s){ return s.trim().length > 30; });
   var cards = [];
 
@@ -390,56 +509,126 @@ function renderAdCards(text, isPro, product, tone, platforms) {
     var card = document.createElement('div');
     card.className = 'ad-card';
     card.innerHTML = '<div class="ad-card-head"><div class="ad-platform"><div class="plat-dot dot-gen"></div>Ad Copy</div><button class="ad-copy-btn" onclick="copyAd(this)">Copy</button></div><div class="ad-text">' + text.trim() + '</div>';
-    adsList.appendChild(card);
-    return;
+    adsList.appendChild(card); return;
   }
 
   sections.forEach(function(section) {
     var lines = section.trim().split('\n');
-    var platform = 'Ad';
-    var adType = '';
-    var adLines = [];
-    var inAd = false;
-
+    var platform = 'Ad'; var adType = ''; var adLines = []; var inAd = false;
     lines.forEach(function(line) {
       line = line.trim();
-      if (line.startsWith('PLATFORM:')) { platform = line.replace('PLATFORM:', '').trim(); }
-      else if (line.startsWith('TYPE:')) { adType = line.replace('TYPE:', '').trim(); }
-      else if (line === 'AD:') { inAd = true; }
-      else if (inAd && line) { adLines.push(line); }
+      if (line.startsWith('PLATFORM:')) platform = line.replace('PLATFORM:', '').trim();
+      else if (line.startsWith('TYPE:')) adType = line.replace('TYPE:', '').trim();
+      else if (line === 'AD:') inAd = true;
+      else if (inAd && line) adLines.push(line);
     });
-
-    if (adLines.length === 0) { adLines = lines.filter(function(l){ return l && !l.startsWith('PLATFORM:') && !l.startsWith('TYPE:') && l !== 'AD:'; }); }
-
+    if (adLines.length === 0) adLines = lines.filter(function(l){ return l && !l.startsWith('PLATFORM:') && !l.startsWith('TYPE:') && l !== 'AD:'; });
     var dotClass = 'dot-gen';
     var pl = platform.toLowerCase();
     if (pl.includes('facebook')) dotClass = 'dot-fb';
     else if (pl.includes('instagram')) dotClass = 'dot-ig';
     else if (pl.includes('google')) dotClass = 'dot-gg';
-
-    var label = platform + (adType ? ' · ' + adType : '');
-    var adText = adLines.join('\n');
-
     var card = document.createElement('div');
     card.className = 'ad-card';
-    card.innerHTML =
-      '<div class="ad-card-head">' +
-      '<div class="ad-platform"><div class="plat-dot ' + dotClass + '"></div>' + label + '</div>' +
-      '<button class="ad-copy-btn" onclick="copyAd(this)">Copy</button>' +
-      '</div>' +
-      '<div class="ad-text">' + adText + '</div>';
+    card.innerHTML = '<div class="ad-card-head"><div class="ad-platform"><div class="plat-dot ' + dotClass + '"></div>' + platform + (adType ? ' · ' + adType : '') + '</div><button class="ad-copy-btn" onclick="copyAd(this)">Copy</button></div><div class="ad-text">' + adLines.join('\n') + '</div>';
     cards.push(card);
   });
 
   var showCount = isPro ? cards.length : Math.min(3, cards.length);
-  for (var i = 0; i < showCount; i++) { adsList.appendChild(cards[i]); }
-
+  for (var i = 0; i < showCount; i++) adsList.appendChild(cards[i]);
   if (!isPro && cards.length > 3) {
     var locked = document.createElement('div');
     locked.className = 'locked-card';
-    locked.innerHTML = '<div class="locked-icon">🔒</div><div class="locked-text">' + (cards.length - 3) + ' more variations locked<br>Upgrade to Pro for all ads + unlimited generations</div><button class="locked-upgrade" onclick="showUpgradeModal()">✦ Upgrade to Pro</button>';
+    locked.innerHTML = '<div class="locked-icon">🔒</div><div class="locked-text">' + (cards.length - 3) + ' more variations locked<br>Upgrade to Pro for all ads</div><button class="locked-upgrade" onclick="showUpgradeModal()">✦ Upgrade to Pro</button>';
     adsList.appendChild(locked);
   }
+}
+
+// IMAGE GENERATION
+function selectStyle(el) {
+  document.querySelectorAll('.img-style-chip').forEach(function(c){ c.classList.remove('selected'); });
+  el.classList.add('selected');
+  selectedStyle = el.getAttribute('data-style');
+}
+
+function selectFormat(el) {
+  document.querySelectorAll('.format-chip').forEach(function(c){ c.classList.remove('selected'); });
+  el.classList.add('selected');
+  selectedFormat = { w: parseInt(el.getAttribute('data-w')), h: parseInt(el.getAttribute('data-h')), ratio: el.getAttribute('data-ratio') };
+}
+
+async function handleImageGenerate() {
+  var isPro = userProfile && userProfile.plan === 'pro';
+  var used = userProfile ? (userProfile.generations_used || 0) : 0;
+  if (!isPro && used >= FREE_IMG_LIMIT) { showUpgradeModal(); return; }
+
+  var product = document.getElementById('img-product').value.trim();
+  var description = document.getElementById('img-description').value.trim();
+  var custom = document.getElementById('img-custom').value.trim();
+
+  if (!product || !description) {
+    var el = document.getElementById('img-alert');
+    el.textContent = 'Please fill in product name and description';
+    el.classList.add('show'); return;
+  }
+  document.getElementById('img-alert').classList.remove('show');
+
+  var formatChip = document.querySelector('.format-chip.selected');
+  var formatLabel = formatChip ? formatChip.querySelector('.fmt-label').textContent : 'Square';
+  var formatSize = formatChip ? formatChip.querySelector('.fmt-size').textContent : '1:1';
+
+  document.getElementById('img-gen-btn').disabled = true;
+  document.getElementById('img-spinner').style.display = 'block';
+  document.getElementById('img-btn-text').textContent = 'Generating...';
+
+  document.getElementById('img-results-empty').style.display = 'none';
+  document.getElementById('img-results-content').style.display = 'block';
+  document.getElementById('img-results-sub').textContent = product + ' · ' + formatLabel + ' · ' + formatSize;
+  document.getElementById('img-output').innerHTML =
+    '<div class="img-result-card"><div class="img-loading">' +
+    '<div class="img-loading-dots"><div class="img-loading-dot"></div><div class="img-loading-dot"></div><div class="img-loading-dot"></div></div>' +
+    '<div class="img-loading-text">Creating your ad image...</div>' +
+    '<div class="img-loading-sub">This takes about 10–15 seconds</div>' +
+    '</div></div>';
+
+  var imgPrompt = product + ', ' + description + ', ' + selectedStyle;
+  if (custom) imgPrompt += ', ' + custom;
+  imgPrompt += ', advertisement, high quality, ' + selectedFormat.ratio;
+
+  var encodedPrompt = encodeURIComponent(imgPrompt);
+  var imgUrl = 'https://image.pollinations.ai/prompt/' + encodedPrompt + '?width=' + selectedFormat.w + '&height=' + selectedFormat.h + '&nologo=true&enhance=true&model=flux';
+
+  var img = new Image();
+  img.onload = function() {
+    var newCount = (userProfile.generations_used || 0) + 1;
+    sb.from('profiles').update({ generations_used: newCount }).eq('id', currentUser.id);
+    if (userProfile) userProfile.generations_used = newCount;
+    updateUsageUI();
+
+    document.getElementById('img-output').innerHTML =
+      '<div class="img-result-card">' +
+      '<div class="img-result-head">' +
+      '<div class="img-result-label">🎨 ' + product + ' · ' + formatLabel + '</div>' +
+      '<div class="img-actions">' +
+      '<button class="img-regen-btn" onclick="handleImageGenerate()">↺ New variation</button>' +
+      '<a class="img-dl-btn" href="' + imgUrl + '" download="suukieai-ad.jpg" target="_blank">⬇ Download</a>' +
+      '</div></div>' +
+      '<div class="img-wrap"><img src="' + imgUrl + '" alt="Generated ad image"/></div>' +
+      '</div>';
+
+    document.getElementById('img-gen-btn').disabled = false;
+    document.getElementById('img-spinner').style.display = 'none';
+    document.getElementById('img-btn-text').textContent = '🎨 Generate ad image';
+  };
+
+  img.onerror = function() {
+    document.getElementById('img-output').innerHTML = '<div class="alert error show">Image generation failed — please try again.</div>';
+    document.getElementById('img-gen-btn').disabled = false;
+    document.getElementById('img-spinner').style.display = 'none';
+    document.getElementById('img-btn-text').textContent = '🎨 Generate ad image';
+  };
+
+  img.src = imgUrl;
 }
 
 function copyAd(btn) {
