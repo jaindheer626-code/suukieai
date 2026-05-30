@@ -37,9 +37,7 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .nav-name{ font-family:var(--font-d); font-size:20px; font-style:italic; color:var(--ink); }
 .nav-name span{ color:var(--accent); }
 .nav-right{ display:flex; align-items:center; gap:12px; }
-.plan-pill{
-  font-size:11px; font-weight:500; padding:3px 10px; border-radius:20px; cursor:pointer;
-}
+.plan-pill{ font-size:11px; font-weight:500; padding:3px 10px; border-radius:20px; cursor:pointer; }
 .plan-free{ background:var(--bg2); color:var(--ink2); }
 .plan-pro{ background:var(--accent-light); color:var(--accent); }
 .nav-avatar{
@@ -56,11 +54,7 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
   display:none; z-index:200;
 }
 .nav-menu.show{ display:block; }
-.nav-menu-item{
-  padding:8px 12px; font-size:13px; color:var(--ink2);
-  border-radius:6px; cursor:pointer;
-  display:flex; align-items:center; gap:8px;
-}
+.nav-menu-item{ padding:8px 12px; font-size:13px; color:var(--ink2); border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:8px; }
 .nav-menu-item:hover{ background:var(--bg2); }
 .nav-menu-item.danger{ color:var(--danger); }
 
@@ -69,11 +63,7 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 @media(max-width:768px){ .page{ grid-template-columns:1fr; } }
 
 /* USAGE BAR */
-.usage-card{
-  background:#fff; border:1px solid var(--border);
-  border-radius:var(--radius); padding:14px 16px;
-  margin-bottom:1rem; grid-column:1/-1;
-}
+.usage-card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; margin-bottom:1rem; grid-column:1/-1; }
 .usage-inner{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
 .usage-text{ flex:1; min-width:200px; }
 .usage-label{ font-size:12px; font-weight:500; color:var(--ink2); margin-bottom:6px; display:flex; justify-content:space-between; }
@@ -83,18 +73,8 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .usage-bar-fill.full{ background:var(--danger); }
 .usage-note{ font-size:11.5px; color:var(--ink3); margin-top:5px; }
 .usage-note.warn{ color:var(--warn); }
-.upgrade-btn-sm{
-  font-size:12px; font-weight:500; padding:7px 16px;
-  background:var(--accent); color:#fff; border:none;
-  border-radius:20px; cursor:pointer; white-space:nowrap;
-  transition:background .15s;
-}
+.upgrade-btn-sm{ font-size:12px; font-weight:500; padding:7px 16px; background:var(--accent); color:#fff; border:none; border-radius:20px; cursor:pointer; white-space:nowrap; transition:background .15s; }
 .upgrade-btn-sm:hover{ background:var(--accent2); }
-.unlimited-badge{
-  display:flex; align-items:center; gap:6px;
-  font-size:12px; font-weight:500; color:var(--accent);
-  background:var(--accent-light); padding:6px 14px; border-radius:20px;
-}
 
 /* FORM CARD */
 .form-card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; box-shadow:var(--shadow); }
@@ -103,48 +83,30 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .field{ margin-bottom:1.1rem; }
 .field label{ display:block; font-size:12px; font-weight:500; color:var(--ink2); margin-bottom:6px; }
 .field label span{ color:var(--danger); }
-.field input, .field textarea, .field select{
+.field input,.field textarea{
   width:100%; padding:10px 13px; font-size:13.5px; color:var(--ink);
   background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm);
   outline:none; font-family:var(--font-b); transition:border-color .15s,background .15s;
 }
-.field input:focus, .field textarea:focus, .field select:focus{
-  border-color:var(--accent-mid); background:#fff;
-  box-shadow:0 0 0 3px rgba(91,78,248,0.07);
-}
+.field input:focus,.field textarea:focus{ border-color:var(--accent-mid); background:#fff; box-shadow:0 0 0 3px rgba(91,78,248,0.07); }
 .field textarea{ resize:vertical; min-height:78px; line-height:1.6; }
-.field input::placeholder, .field textarea::placeholder{ color:var(--ink3); font-size:13px; }
+.field input::placeholder,.field textarea::placeholder{ color:var(--ink3); font-size:13px; }
 
 /* TONE CHIPS */
 .tone-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:6px; }
-.tone-chip{
-  padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius-sm);
-  font-size:12.5px; color:var(--ink2); text-align:center; cursor:pointer;
-  transition:all .15s; font-family:var(--font-b); background:var(--bg);
-}
+.tone-chip{ padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:12.5px; color:var(--ink2); text-align:center; cursor:pointer; transition:all .15s; font-family:var(--font-b); background:var(--bg); }
 .tone-chip:hover{ border-color:var(--accent-mid); background:var(--accent-light); color:var(--accent); }
 .tone-chip.selected{ border-color:var(--accent); background:var(--accent-light); color:var(--accent); font-weight:500; }
 
 /* PLATFORM CHIPS */
 .plat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
-.plat-chip{
-  padding:9px 8px; border:1px solid var(--border); border-radius:var(--radius-sm);
-  font-size:12.5px; color:var(--ink2); text-align:center; cursor:pointer;
-  transition:all .15s; font-family:var(--font-b); background:var(--bg);
-  display:flex; align-items:center; justify-content:center; gap:5px;
-}
+.plat-chip{ padding:9px 8px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:12.5px; color:var(--ink2); text-align:center; cursor:pointer; transition:all .15s; font-family:var(--font-b); background:var(--bg); display:flex; align-items:center; justify-content:center; gap:5px; }
 .plat-chip:hover{ border-color:var(--accent-mid); }
 .plat-chip.selected{ border-color:var(--accent); background:var(--accent-light); color:var(--accent); font-weight:500; }
 
 .divider{ height:1px; background:var(--border2); margin:1.25rem 0; }
 
-.gen-btn{
-  width:100%; padding:12px; background:var(--accent); color:#fff;
-  font-size:14px; font-weight:500; border:none; border-radius:var(--radius-sm);
-  cursor:pointer; font-family:var(--font-b);
-  display:flex; align-items:center; justify-content:center; gap:8px;
-  transition:background .15s, transform .1s;
-}
+.gen-btn{ width:100%; padding:12px; background:var(--accent); color:#fff; font-size:14px; font-weight:500; border:none; border-radius:var(--radius-sm); cursor:pointer; font-family:var(--font-b); display:flex; align-items:center; justify-content:center; gap:8px; transition:background .15s,transform .1s; }
 .gen-btn:hover{ background:var(--accent2); }
 .gen-btn:active{ transform:scale(0.99); }
 .gen-btn:disabled{ background:var(--ink3); cursor:not-allowed; }
@@ -161,12 +123,7 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .results-head{ display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:1.25rem; }
 .results-title{ font-family:var(--font-d); font-size:20px; font-style:italic; color:var(--ink); }
 .results-sub{ font-size:12px; color:var(--ink3); margin-top:3px; }
-.regen-btn{
-  font-size:12px; padding:6px 12px; border-radius:20px;
-  border:1px solid var(--border); background:transparent;
-  color:var(--ink2); cursor:pointer; white-space:nowrap;
-  transition:all .15s; font-family:var(--font-b);
-}
+.regen-btn{ font-size:12px; padding:6px 12px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--ink2); cursor:pointer; white-space:nowrap; transition:all .15s; font-family:var(--font-b); }
 .regen-btn:hover{ background:var(--bg2); }
 
 /* AD CARDS */
@@ -175,53 +132,33 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .ad-card-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
 .ad-platform{ display:flex; align-items:center; gap:7px; font-size:12px; font-weight:500; color:var(--ink2); }
 .plat-dot{ width:7px; height:7px; border-radius:50%; }
-.dot-fb{ background:#1877f2; }
-.dot-ig{ background:#c13584; }
-.dot-gg{ background:#34a853; }
-.ad-copy-btn{
-  font-size:11px; padding:3px 10px; border-radius:20px;
-  border:1px solid var(--border); background:transparent;
-  color:var(--ink3); cursor:pointer; transition:all .15s;
-  font-family:var(--font-b);
-}
+.dot-fb{ background:#1877f2; } .dot-ig{ background:#c13584; } .dot-gg{ background:#34a853; } .dot-gen{ background:var(--accent); }
+.ad-copy-btn{ font-size:11px; padding:3px 10px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--ink3); cursor:pointer; transition:all .15s; font-family:var(--font-b); }
 .ad-copy-btn:hover{ background:var(--bg2); color:var(--ink); }
 .ad-copy-btn.copied{ background:var(--success-light); color:var(--success); border-color:transparent; }
-.ad-text{ font-size:13.5px; color:var(--ink); line-height:1.65; }
-.ad-tags{ display:flex; gap:5px; flex-wrap:wrap; margin-top:8px; }
-.ad-tag{ font-size:11px; padding:2px 8px; border-radius:20px; background:var(--bg2); color:var(--ink3); }
+.ad-text{ font-size:13.5px; color:var(--ink); line-height:1.65; white-space:pre-wrap; }
+
+/* STREAMING */
+.streaming-card{ border:1px solid var(--accent-mid); border-radius:var(--radius-sm); padding:14px; margin-bottom:10px; background:var(--accent-light); }
+.streaming-text{ font-size:13.5px; color:var(--ink); line-height:1.65; white-space:pre-wrap; }
+.streaming-cursor{ display:inline-block; width:2px; height:14px; background:var(--accent); animation:blink .7s infinite; vertical-align:middle; margin-left:2px; }
+@keyframes blink{ 0%,100%{ opacity:1; } 50%{ opacity:0; } }
 
 /* LOCKED CARD */
-.locked-card{
-  border:1px dashed var(--border); border-radius:var(--radius-sm);
-  padding:20px; text-align:center; margin-bottom:10px;
-  background:var(--bg);
-}
+.locked-card{ border:1px dashed var(--border); border-radius:var(--radius-sm); padding:20px; text-align:center; margin-bottom:10px; background:var(--bg); }
 .locked-icon{ font-size:22px; margin-bottom:8px; opacity:.5; }
 .locked-text{ font-size:13px; color:var(--ink3); margin-bottom:12px; line-height:1.5; }
-.locked-upgrade{
-  font-size:12px; font-weight:500; padding:7px 18px;
-  background:var(--accent); color:#fff; border:none;
-  border-radius:20px; cursor:pointer; font-family:var(--font-b);
-  transition:background .15s;
-}
+.locked-upgrade{ font-size:12px; font-weight:500; padding:7px 18px; background:var(--accent); color:#fff; border:none; border-radius:20px; cursor:pointer; font-family:var(--font-b); transition:background .15s; }
 .locked-upgrade:hover{ background:var(--accent2); }
 
 /* UPGRADE MODAL */
-.modal-overlay{
-  position:fixed; inset:0; background:rgba(15,14,13,0.5);
-  display:none; align-items:center; justify-content:center;
-  z-index:500; padding:1.5rem; backdrop-filter:blur(4px);
-}
+.modal-overlay{ position:fixed; inset:0; background:rgba(15,14,13,0.5); display:none; align-items:center; justify-content:center; z-index:500; padding:1.5rem; backdrop-filter:blur(4px); }
 .modal-overlay.show{ display:flex; }
-.modal{
-  background:#fff; border-radius:var(--radius); padding:2rem;
-  width:100%; max-width:480px; box-shadow:0 20px 60px rgba(15,14,13,0.15);
-}
+.modal{ background:#fff; border-radius:var(--radius); padding:2rem; width:100%; max-width:480px; box-shadow:0 20px 60px rgba(15,14,13,0.15); }
 .modal-title{ font-family:var(--font-d); font-size:26px; font-style:italic; color:var(--ink); margin-bottom:6px; }
 .modal-sub{ font-size:13px; color:var(--ink3); margin-bottom:1.5rem; }
 .plan-cards{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:1.5rem; }
 .plan-card{ border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; cursor:pointer; transition:all .15s; }
-.plan-card:hover{ border-color:var(--accent-mid); }
 .plan-card.featured{ border:2px solid var(--accent); position:relative; }
 .plan-badge{ position:absolute; top:-11px; left:50%; transform:translateX(-50%); font-size:11px; font-weight:500; padding:2px 12px; border-radius:20px; background:var(--accent); color:#fff; white-space:nowrap; }
 .plan-name{ font-size:13px; font-weight:500; color:var(--ink); margin-bottom:4px; }
@@ -237,18 +174,6 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .modal-close{ width:100%; padding:10px; background:transparent; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:13px; color:var(--ink3); cursor:pointer; font-family:var(--font-b); transition:all .15s; }
 .modal-close:hover{ background:var(--bg2); }
 
-/* LOADING OVERLAY */
-.loading-overlay{
-  position:fixed; inset:0; background:rgba(250,249,247,0.85);
-  display:none; align-items:center; justify-content:center;
-  z-index:300; flex-direction:column; gap:14px;
-  backdrop-filter:blur(3px);
-}
-.loading-overlay.show{ display:flex; }
-.loading-spinner{ width:36px; height:36px; border:3px solid var(--accent-light); border-top-color:var(--accent); border-radius:50%; animation:spin .7s linear infinite; }
-.loading-text{ font-size:14px; color:var(--ink2); font-weight:500; }
-.loading-sub{ font-size:12px; color:var(--ink3); }
-
 .alert{ border-radius:var(--radius-sm); padding:11px 14px; font-size:13px; line-height:1.5; margin-bottom:1rem; display:none; }
 .alert.error{ background:var(--danger-light); color:var(--danger); }
 .alert.show{ display:block; }
@@ -256,9 +181,8 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav">
-  <a class="nav-brand" href="app.html">
+  <a class="nav-brand" href="index.html">
     <div class="nav-logo">
       <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
     </div>
@@ -276,10 +200,8 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
   </div>
 </nav>
 
-<!-- PAGE -->
 <div class="page">
 
-  <!-- USAGE BAR -->
   <div class="usage-card" id="usage-card">
     <div class="usage-inner">
       <div class="usage-text" id="usage-text">
@@ -287,22 +209,17 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
           <span>Generations this month</span>
           <span id="usage-count">0 / 3</span>
         </div>
-        <div class="usage-bar-bg">
-          <div class="usage-bar-fill" id="usage-bar" style="width:0%"></div>
-        </div>
+        <div class="usage-bar-bg"><div class="usage-bar-fill" id="usage-bar" style="width:0%"></div></div>
         <div class="usage-note" id="usage-note">3 free generations per month</div>
       </div>
       <button class="upgrade-btn-sm" id="upgrade-btn-sm" onclick="showUpgradeModal()">Upgrade to Pro ↗</button>
     </div>
   </div>
 
-  <!-- FORM -->
   <div class="form-card">
     <div class="card-title">Generate ad copy</div>
     <div class="card-sub">Fill in your product details below</div>
-
     <div id="form-alert" class="alert error"></div>
-
     <div class="field">
       <label>Product name <span>*</span></label>
       <input type="text" id="f-product" placeholder="e.g. FitTrack Pro smartwatch"/>
@@ -332,25 +249,18 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
         <div class="plat-chip" onclick="togglePlat(this)" data-plat="Google">🔍 Google</div>
       </div>
     </div>
-    <div class="field">
-      <label>Your email <span>*</span></label>
-      <input type="email" id="f-email" placeholder="Results also sent here"/>
-    </div>
-
     <div class="divider"></div>
-
     <button class="gen-btn" id="gen-btn" onclick="handleGenerate()">
       <div class="spinner" id="gen-spinner"></div>
       <span id="gen-btn-text">✦ Generate my ads</span>
     </button>
-    <div class="gen-note" id="gen-note">Free plan · 3 generations/month · results in ~30 sec</div>
+    <div class="gen-note" id="gen-note">Free plan · 3 generations/month · results appear instantly</div>
   </div>
 
-  <!-- RESULTS -->
   <div class="results-card" id="results-card">
     <div class="results-empty" id="results-empty">
       <div class="results-empty-icon">✦</div>
-      <div class="results-empty-text">Your generated ads will<br>appear here in seconds</div>
+      <div class="results-empty-text">Your generated ads will<br>appear here instantly</div>
     </div>
     <div id="results-content" style="display:none">
       <div class="results-head">
@@ -366,18 +276,10 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 
 </div>
 
-<!-- LOADING OVERLAY -->
-<div class="loading-overlay" id="loading-overlay">
-  <div class="loading-spinner"></div>
-  <div class="loading-text">Generating your ads...</div>
-  <div class="loading-sub">GPT-4o is writing your copy</div>
-</div>
-
-<!-- UPGRADE MODAL -->
 <div class="modal-overlay" id="upgrade-modal" onclick="closeModalOutside(event)">
   <div class="modal">
     <div class="modal-title">Upgrade SuukieAI</div>
-    <div class="modal-sub">Unlock unlimited ad generation & all platforms</div>
+    <div class="modal-sub">Unlock unlimited ad generation</div>
     <div class="plan-cards">
       <div class="plan-card">
         <div class="plan-name">Free</div>
@@ -396,7 +298,7 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
         <div class="plan-feat"><span class="plan-feat-check">✓</span> <strong>Unlimited</strong> generations</div>
         <div class="plan-feat"><span class="plan-feat-check">✓</span> 5 ad variations</div>
         <div class="plan-feat"><span class="plan-feat-check">✓</span> All 3 platforms</div>
-        <div class="plan-feat"><span class="plan-feat-check">✓</span> Save history</div>
+        <div class="plan-feat"><span class="plan-feat-check">✓</span> Instant results</div>
         <button class="plan-btn plan-btn-solid" onclick="goToPricing()">Upgrade now →</button>
       </div>
     </div>
@@ -405,63 +307,43 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 </div>
 
 <script>
-const SUPABASE_URL = 'https://wqhyeuchtzahchrgtksu.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxaHlldWNodHphaGNocmd0a3N1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NzE2NzQsImV4cCI6MjA5NTQ0NzY3NH0.fdlEvt7MsM2Wbdg5yUWJC0xAH8Pq5-YvWLvEXTnWgUI';
-const WEBHOOK_URL = 'https://hook.eu1.make.com/y1cykrr9khwgpjlnga1axxrks1zlljmx';
-const FREE_LIMIT = 3;
+var SUPABASE_URL = 'https://wqhyeuchtzahchrgtksu.supabase.co';
+var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxaHlldWNodHphaGNocmd0a3N1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NzE2NzQsImV4cCI6MjA5NTQ0NzY3NH0.fdlEvt7MsM2Wbdg5yUWJC0xAH8Pq5-YvWLvEXTnWgUI';
+var GROQ_API_KEY = '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';
+var GROQ_MODEL = 'llama3-8b-8192';
+var FREE_LIMIT = 3;
 
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
+var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 var currentUser = null;
 var userProfile = null;
 
-// ─── AUTH GUARD ───────────────────────────────────────────
 async function init() {
   var sessionResult = await sb.auth.getSession();
   var session = sessionResult.data.session;
-  if (!session) {
-    window.location.href = 'index.html';
-    return;
-  }
+  if (!session) { window.location.href = 'login.html'; return; }
   currentUser = session.user;
   document.getElementById('avatar-letter').textContent = currentUser.email.charAt(0).toUpperCase();
-  document.getElementById('f-email').value = currentUser.email;
   await loadProfile();
 }
 
 async function loadProfile() {
   var result = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
-  if (result.data) {
-    userProfile = result.data;
-    updateUsageUI();
-  }
+  if (result.data) { userProfile = result.data; updateUsageUI(); }
 }
 
 function updateUsageUI() {
   if (!userProfile) return;
   var isPro = userProfile.plan === 'pro';
   var used = userProfile.generations_used || 0;
-
-  // Nav pill
   var pill = document.getElementById('plan-pill');
   if (isPro) {
-    pill.textContent = '✦ Pro';
-    pill.className = 'plan-pill plan-pro';
-  } else {
-    pill.textContent = 'Free plan';
-    pill.className = 'plan-pill plan-free';
-  }
-
-  // Usage bar
-  if (isPro) {
-    document.getElementById('usage-count').textContent = used + ' generations';
-    document.getElementById('usage-bar').style.width = '100%';
-    document.getElementById('usage-bar').className = 'usage-bar-fill';
-    document.getElementById('usage-note').textContent = 'Unlimited generations — Pro plan';
-    document.getElementById('upgrade-btn-sm').style.display = 'none';
+    pill.textContent = '✦ Pro'; pill.className = 'plan-pill plan-pro';
     var utext = document.getElementById('usage-text');
-    utext.innerHTML = '<div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--accent)">✦ Pro plan — unlimited generations active</div>';
+    utext.innerHTML = '<div style="font-size:13px;font-weight:500;color:var(--accent)">✦ Pro plan — unlimited generations active</div>';
+    document.getElementById('upgrade-btn-sm').style.display = 'none';
+    document.getElementById('gen-note').textContent = 'Pro plan · unlimited · results appear instantly';
   } else {
+    pill.textContent = 'Free plan'; pill.className = 'plan-pill plan-free';
     var pct = Math.min((used / FREE_LIMIT) * 100, 100);
     document.getElementById('usage-count').textContent = used + ' / ' + FREE_LIMIT;
     document.getElementById('usage-bar').style.width = pct + '%';
@@ -473,32 +355,22 @@ function updateUsageUI() {
       note.className = 'usage-note warn';
     } else if (used >= FREE_LIMIT - 1) {
       bar.className = 'usage-bar-fill warn';
-      note.textContent = '1 generation left this month — upgrade for unlimited';
+      note.textContent = '1 generation left — upgrade for unlimited';
       note.className = 'usage-note warn';
     } else {
       bar.className = 'usage-bar-fill';
       note.textContent = FREE_LIMIT + ' free generations per month';
-      note.className = 'usage-note';
     }
-  }
-
-  // Gen button note
-  if (isPro) {
-    document.getElementById('gen-note').textContent = 'Pro plan · unlimited · results in ~30 sec';
-  } else {
-    document.getElementById('gen-note').textContent = 'Free plan · ' + FREE_LIMIT + ' generations/month · results in ~30 sec';
+    document.getElementById('gen-note').textContent = 'Free plan · ' + FREE_LIMIT + ' generations/month · results appear instantly';
   }
 }
 
-// ─── TONE & PLATFORM SELECTION ────────────────────────────
 function selectTone(el) {
-  document.querySelectorAll('.tone-chip').forEach(function(c) { c.classList.remove('selected'); });
+  document.querySelectorAll('.tone-chip').forEach(function(c){ c.classList.remove('selected'); });
   el.classList.add('selected');
 }
 
-function togglePlat(el) {
-  el.classList.toggle('selected');
-}
+function togglePlat(el) { el.classList.toggle('selected'); }
 
 function getSelectedTone() {
   var sel = document.querySelector('.tone-chip.selected');
@@ -508,193 +380,179 @@ function getSelectedTone() {
 function getSelectedPlatforms() {
   var chips = document.querySelectorAll('.plat-chip.selected');
   var plats = [];
-  chips.forEach(function(c) { plats.push(c.getAttribute('data-plat')); });
+  chips.forEach(function(c){ plats.push(c.getAttribute('data-plat')); });
   return plats;
 }
 
-// ─── GENERATE ─────────────────────────────────────────────
 async function handleGenerate() {
   var isPro = userProfile && userProfile.plan === 'pro';
   var used = userProfile ? (userProfile.generations_used || 0) : 0;
-
-  if (!isPro && used >= FREE_LIMIT) {
-    showUpgradeModal();
-    return;
-  }
+  if (!isPro && used >= FREE_LIMIT) { showUpgradeModal(); return; }
 
   var product = document.getElementById('f-product').value.trim();
   var description = document.getElementById('f-description').value.trim();
   var audience = document.getElementById('f-audience').value.trim();
-  var email = document.getElementById('f-email').value.trim();
   var tone = getSelectedTone();
   var platforms = getSelectedPlatforms();
 
-  if (!product || !description || !audience || !email) {
-    showFormAlert('Please fill in all required fields');
-    return;
-  }
-  if (platforms.length === 0) {
-    showFormAlert('Please select at least one platform');
-    return;
-  }
+  if (!product || !description || !audience) { showFormAlert('Please fill in all required fields'); return; }
+  if (platforms.length === 0) { showFormAlert('Please select at least one platform'); return; }
 
   hideFormAlert();
   setGenerating(true);
 
-  var payload = {
-    product: product,
-    description: description,
-    audience: audience,
-    tone: tone,
-    platforms: platforms.join(', '),
-    email: email,
-    plan: isPro ? 'pro' : 'free',
-    timestamp: new Date().toISOString()
-  };
+  var maxAds = isPro ? 5 : 3;
+  var prompt = 'You are an expert ad copywriter. Write exactly ' + maxAds + ' ad variations for the following product.\n\n' +
+    'Product: ' + product + '\n' +
+    'Description: ' + description + '\n' +
+    'Audience: ' + audience + '\n' +
+    'Tone: ' + tone + '\n' +
+    'Platforms: ' + platforms.join(', ') + '\n\n' +
+    'Format each ad exactly like this:\n' +
+    '**[PLATFORM - TYPE]**\n[ad copy here]\n\n' +
+    'Write ' + maxAds + ' variations total, one for each platform/format combination. Keep each ad concise and high-converting.';
 
-  try {
-    await fetch(WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-  } catch(e) {
-    console.log('Webhook fired');
-  }
-
-  // Increment usage count in Supabase
-  var newCount = used + 1;
-  await sb.from('profiles').update({ generations_used: newCount }).eq('id', currentUser.id);
-  userProfile.generations_used = newCount;
-  updateUsageUI();
-
-  // Show results
-  setGenerating(false);
-  showResults(product, tone, platforms, isPro);
-}
-
-function showResults(product, tone, platforms, isPro) {
   document.getElementById('results-empty').style.display = 'none';
   document.getElementById('results-content').style.display = 'block';
   document.getElementById('results-sub').textContent = product + ' · ' + tone + ' · ' + platforms.join(', ');
+  document.getElementById('ads-list').innerHTML = '<div class="streaming-card"><div class="streaming-text" id="stream-text"></div><span class="streaming-cursor"></span></div>';
 
+  try {
+    var response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + GROQ_API_KEY
+      },
+      body: JSON.stringify({
+        model: GROQ_MODEL,
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 1200,
+        temperature: 0.8,
+        stream: true
+      })
+    });
+
+    var reader = response.body.getReader();
+    var decoder = new TextDecoder();
+    var fullText = '';
+    var streamEl = document.getElementById('stream-text');
+
+    while (true) {
+      var result = await reader.read();
+      if (result.done) break;
+      var chunk = decoder.decode(result.value);
+      var lines = chunk.split('\n');
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i].trim();
+        if (line.startsWith('data: ') && line !== 'data: [DONE]') {
+          try {
+            var data = JSON.parse(line.slice(6));
+            var delta = data.choices[0].delta.content;
+            if (delta) {
+              fullText += delta;
+              streamEl.textContent = fullText;
+            }
+          } catch(e) {}
+        }
+      }
+    }
+
+    var newCount = used + 1;
+    await sb.from('profiles').update({ generations_used: newCount }).eq('id', currentUser.id);
+    userProfile.generations_used = newCount;
+    updateUsageUI();
+
+    renderAdCards(fullText, isPro);
+
+  } catch(err) {
+    document.getElementById('ads-list').innerHTML = '<div class="alert error show">Something went wrong — please try again.</div>';
+    console.error(err);
+  }
+
+  setGenerating(false);
+}
+
+function renderAdCards(text, isPro) {
   var adsList = document.getElementById('ads-list');
   adsList.innerHTML = '';
 
-  var allAds = buildAdCards(product, tone, platforms);
-
-  var showCount = isPro ? allAds.length : Math.min(3, allAds.length);
-
-  for (var i = 0; i < showCount; i++) {
-    adsList.appendChild(allAds[i]);
-  }
-
-  if (!isPro && allAds.length > 3) {
-    var locked = document.createElement('div');
-    locked.className = 'locked-card';
-    locked.innerHTML = '<div class="locked-icon">🔒</div><div class="locked-text">' + (allAds.length - 3) + ' more variations locked<br>Upgrade to Pro for all 5 ads + unlimited generations</div><button class="locked-upgrade" onclick="showUpgradeModal()">✦ Upgrade to Pro</button>';
-    adsList.appendChild(locked);
-  }
-}
-
-function buildAdCards(product, tone, platforms) {
+  var sections = text.split(/\n\n+/);
   var cards = [];
-  var platConfig = [
-    { plat:'Facebook', label:'Facebook · Short', dot:'dot-fb', tags:['CTA included','under 90 chars'] },
-    { plat:'Facebook', label:'Facebook · Long form', dot:'dot-fb', tags:['story format','awareness'] },
-    { plat:'Instagram', label:'Instagram · Caption', dot:'dot-ig', tags:['hashtags','visual hook'] },
-    { plat:'Instagram', label:'Instagram · Story', dot:'dot-ig', tags:['short','swipe CTA'] },
-    { plat:'Google', label:'Google · Headline', dot:'dot-gg', tags:['under 30 chars','SEO'] }
-  ];
 
-  var filtered = platConfig.filter(function(p) {
-    return platforms.indexOf(p.plat) !== -1;
-  });
+  sections.forEach(function(section) {
+    section = section.trim();
+    if (section.length < 20) return;
 
-  if (filtered.length === 0) { filtered = platConfig; }
-
-  filtered.forEach(function(cfg) {
     var card = document.createElement('div');
     card.className = 'ad-card';
+
+    var lines = section.split('\n');
+    var header = lines[0].replace(/\*\*/g, '').trim();
+    var body = lines.slice(1).join('\n').trim();
+    if (!body) { body = section; header = 'Ad Variation'; }
+
+    var dotClass = 'dot-gen';
+    if (header.toLowerCase().includes('facebook')) dotClass = 'dot-fb';
+    else if (header.toLowerCase().includes('instagram')) dotClass = 'dot-ig';
+    else if (header.toLowerCase().includes('google')) dotClass = 'dot-gg';
+
     card.innerHTML =
       '<div class="ad-card-head">' +
-        '<div class="ad-platform"><div class="plat-dot ' + cfg.dot + '"></div>' + cfg.label + '</div>' +
+        '<div class="ad-platform"><div class="plat-dot ' + dotClass + '"></div>' + header + '</div>' +
         '<button class="ad-copy-btn" onclick="copyAd(this)">Copy</button>' +
       '</div>' +
-      '<div class="ad-text">Your ' + cfg.label + ' ad copy for <strong>' + product + '</strong> (' + tone.toLowerCase() + ' tone) will be delivered to your email in ~30 seconds. Check your inbox!</div>' +
-      '<div class="ad-tags">' + cfg.tags.map(function(t){ return '<span class="ad-tag">' + t + '</span>'; }).join('') + '</div>';
+      '<div class="ad-text">' + body + '</div>';
+
     cards.push(card);
   });
 
-  return cards;
+  if (cards.length === 0) {
+    var card = document.createElement('div');
+    card.className = 'ad-card';
+    card.innerHTML = '<div class="ad-text">' + text + '</div><button class="ad-copy-btn" style="margin-top:8px" onclick="copyAd(this)">Copy all</button>';
+    adsList.appendChild(card);
+    return;
+  }
+
+  var showCount = isPro ? cards.length : Math.min(3, cards.length);
+  for (var i = 0; i < showCount; i++) { adsList.appendChild(cards[i]); }
+
+  if (!isPro && cards.length > 3) {
+    var locked = document.createElement('div');
+    locked.className = 'locked-card';
+    locked.innerHTML = '<div class="locked-icon">🔒</div><div class="locked-text">' + (cards.length - 3) + ' more variations locked<br>Upgrade to Pro for all ads + unlimited generations</div><button class="locked-upgrade" onclick="showUpgradeModal()">✦ Upgrade to Pro</button>';
+    adsList.appendChild(locked);
+  }
 }
 
 function copyAd(btn) {
   var text = btn.closest('.ad-card').querySelector('.ad-text').textContent;
   navigator.clipboard.writeText(text).then(function() {
-    btn.textContent = 'Copied!';
-    btn.classList.add('copied');
-    setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    btn.textContent = 'Copied!'; btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
   });
 }
 
-// ─── UI HELPERS ───────────────────────────────────────────
 function setGenerating(loading) {
   var btn = document.getElementById('gen-btn');
   var spinner = document.getElementById('gen-spinner');
   var text = document.getElementById('gen-btn-text');
-  var overlay = document.getElementById('loading-overlay');
   btn.disabled = loading;
   spinner.style.display = loading ? 'block' : 'none';
   text.textContent = loading ? 'Generating...' : '✦ Generate my ads';
-  overlay.classList.toggle('show', loading);
 }
 
-function showFormAlert(msg) {
-  var el = document.getElementById('form-alert');
-  el.textContent = msg;
-  el.classList.add('show');
-}
+function showFormAlert(msg) { var el = document.getElementById('form-alert'); el.textContent = msg; el.classList.add('show'); }
+function hideFormAlert() { document.getElementById('form-alert').classList.remove('show'); }
+function showUpgradeModal() { document.getElementById('upgrade-modal').classList.add('show'); }
+function closeUpgradeModal() { document.getElementById('upgrade-modal').classList.remove('show'); }
+function closeModalOutside(e) { if (e.target === document.getElementById('upgrade-modal')) closeUpgradeModal(); }
+function goToPricing() { window.location.href = 'pricing.html'; }
+function toggleMenu() { document.getElementById('nav-menu').classList.toggle('show'); }
+document.addEventListener('click', function(e) { if (!e.target.closest('.nav-avatar')) document.getElementById('nav-menu').classList.remove('show'); });
+async function handleSignOut() { await sb.auth.signOut(); window.location.href = 'login.html'; }
 
-function hideFormAlert() {
-  document.getElementById('form-alert').classList.remove('show');
-}
-
-function showUpgradeModal() {
-  document.getElementById('upgrade-modal').classList.add('show');
-}
-
-function closeUpgradeModal() {
-  document.getElementById('upgrade-modal').classList.remove('show');
-}
-
-function closeModalOutside(e) {
-  if (e.target === document.getElementById('upgrade-modal')) {
-    closeUpgradeModal();
-  }
-}
-
-function goToPricing() {
-  window.location.href = 'pricing.html';
-}
-
-function toggleMenu() {
-  document.getElementById('nav-menu').classList.toggle('show');
-}
-
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.nav-avatar')) {
-    document.getElementById('nav-menu').classList.remove('show');
-  }
-});
-
-async function handleSignOut() {
-  await sb.auth.signOut();
-  window.location.href = 'index.html';
-}
-
-// ─── START ────────────────────────────────────────────────
 init();
 </script>
 </body>
