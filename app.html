@@ -23,14 +23,7 @@
 }
 *{ box-sizing:border-box; margin:0; padding:0; }
 body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-height:100vh; }
-
-/* NAV */
-.nav{
-  background:#fff; border-bottom:1px solid var(--border);
-  padding:0 2rem; height:58px;
-  display:flex; align-items:center; justify-content:space-between;
-  position:sticky; top:0; z-index:100;
-}
+.nav{ background:#fff; border-bottom:1px solid var(--border); padding:0 2rem; height:58px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
 .nav-brand{ display:flex; align-items:center; gap:8px; text-decoration:none; }
 .nav-logo{ width:30px; height:30px; border-radius:8px; background:var(--accent); display:flex; align-items:center; justify-content:center; }
 .nav-logo svg{ width:16px; height:16px; fill:none; stroke:#fff; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
@@ -40,29 +33,14 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .plan-pill{ font-size:11px; font-weight:500; padding:3px 10px; border-radius:20px; cursor:pointer; }
 .plan-free{ background:var(--bg2); color:var(--ink2); }
 .plan-pro{ background:var(--accent-light); color:var(--accent); }
-.nav-avatar{
-  width:32px; height:32px; border-radius:50%;
-  background:var(--accent-light); color:var(--accent);
-  font-size:12px; font-weight:500;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; position:relative;
-}
-.nav-menu{
-  position:absolute; top:42px; right:0;
-  background:#fff; border:1px solid var(--border); border-radius:var(--radius-sm);
-  box-shadow:var(--shadow); min-width:160px; padding:6px;
-  display:none; z-index:200;
-}
+.nav-avatar{ width:32px; height:32px; border-radius:50%; background:var(--accent-light); color:var(--accent); font-size:12px; font-weight:500; display:flex; align-items:center; justify-content:center; cursor:pointer; position:relative; }
+.nav-menu{ position:absolute; top:42px; right:0; background:#fff; border:1px solid var(--border); border-radius:var(--radius-sm); box-shadow:var(--shadow); min-width:160px; padding:6px; display:none; z-index:200; }
 .nav-menu.show{ display:block; }
 .nav-menu-item{ padding:8px 12px; font-size:13px; color:var(--ink2); border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:8px; }
 .nav-menu-item:hover{ background:var(--bg2); }
 .nav-menu-item.danger{ color:var(--danger); }
-
-/* LAYOUT */
 .page{ max-width:1100px; margin:0 auto; padding:2rem 1.5rem; display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:start; }
 @media(max-width:768px){ .page{ grid-template-columns:1fr; } }
-
-/* USAGE BAR */
 .usage-card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; margin-bottom:1rem; grid-column:1/-1; }
 .usage-inner{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
 .usage-text{ flex:1; min-width:200px; }
@@ -75,47 +53,32 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .usage-note.warn{ color:var(--warn); }
 .upgrade-btn-sm{ font-size:12px; font-weight:500; padding:7px 16px; background:var(--accent); color:#fff; border:none; border-radius:20px; cursor:pointer; white-space:nowrap; transition:background .15s; }
 .upgrade-btn-sm:hover{ background:var(--accent2); }
-
-/* FORM CARD */
 .form-card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; box-shadow:var(--shadow); }
 .card-title{ font-family:var(--font-d); font-size:22px; font-style:italic; color:var(--ink); margin-bottom:4px; }
 .card-sub{ font-size:13px; color:var(--ink3); margin-bottom:1.5rem; }
 .field{ margin-bottom:1.1rem; }
 .field label{ display:block; font-size:12px; font-weight:500; color:var(--ink2); margin-bottom:6px; }
 .field label span{ color:var(--danger); }
-.field input,.field textarea{
-  width:100%; padding:10px 13px; font-size:13.5px; color:var(--ink);
-  background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm);
-  outline:none; font-family:var(--font-b); transition:border-color .15s,background .15s;
-}
+.field input,.field textarea{ width:100%; padding:10px 13px; font-size:13.5px; color:var(--ink); background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm); outline:none; font-family:var(--font-b); transition:border-color .15s,background .15s; }
 .field input:focus,.field textarea:focus{ border-color:var(--accent-mid); background:#fff; box-shadow:0 0 0 3px rgba(91,78,248,0.07); }
 .field textarea{ resize:vertical; min-height:78px; line-height:1.6; }
 .field input::placeholder,.field textarea::placeholder{ color:var(--ink3); font-size:13px; }
-
-/* TONE CHIPS */
 .tone-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:6px; }
 .tone-chip{ padding:8px 10px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:12.5px; color:var(--ink2); text-align:center; cursor:pointer; transition:all .15s; font-family:var(--font-b); background:var(--bg); }
 .tone-chip:hover{ border-color:var(--accent-mid); background:var(--accent-light); color:var(--accent); }
 .tone-chip.selected{ border-color:var(--accent); background:var(--accent-light); color:var(--accent); font-weight:500; }
-
-/* PLATFORM CHIPS */
 .plat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
 .plat-chip{ padding:9px 8px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:12.5px; color:var(--ink2); text-align:center; cursor:pointer; transition:all .15s; font-family:var(--font-b); background:var(--bg); display:flex; align-items:center; justify-content:center; gap:5px; }
 .plat-chip:hover{ border-color:var(--accent-mid); }
 .plat-chip.selected{ border-color:var(--accent); background:var(--accent-light); color:var(--accent); font-weight:500; }
-
 .divider{ height:1px; background:var(--border2); margin:1.25rem 0; }
-
 .gen-btn{ width:100%; padding:12px; background:var(--accent); color:#fff; font-size:14px; font-weight:500; border:none; border-radius:var(--radius-sm); cursor:pointer; font-family:var(--font-b); display:flex; align-items:center; justify-content:center; gap:8px; transition:background .15s,transform .1s; }
 .gen-btn:hover{ background:var(--accent2); }
 .gen-btn:active{ transform:scale(0.99); }
 .gen-btn:disabled{ background:var(--ink3); cursor:not-allowed; }
 .gen-note{ text-align:center; font-size:11.5px; color:var(--ink3); margin-top:8px; }
-
 .spinner{ width:16px; height:16px; border:2px solid rgba(255,255,255,0.35); border-top-color:#fff; border-radius:50%; animation:spin .6s linear infinite; display:none; }
 @keyframes spin{ to{ transform:rotate(360deg); } }
-
-/* RESULTS CARD */
 .results-card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; box-shadow:var(--shadow); }
 .results-empty{ text-align:center; padding:3rem 1rem; }
 .results-empty-icon{ font-size:36px; margin-bottom:12px; opacity:.4; }
@@ -125,8 +88,6 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .results-sub{ font-size:12px; color:var(--ink3); margin-top:3px; }
 .regen-btn{ font-size:12px; padding:6px 12px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--ink2); cursor:pointer; white-space:nowrap; transition:all .15s; font-family:var(--font-b); }
 .regen-btn:hover{ background:var(--bg2); }
-
-/* AD CARDS */
 .ad-card{ border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; margin-bottom:10px; transition:border-color .15s; }
 .ad-card:hover{ border-color:var(--accent-mid); }
 .ad-card-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
@@ -137,55 +98,46 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 .ad-copy-btn:hover{ background:var(--bg2); color:var(--ink); }
 .ad-copy-btn.copied{ background:var(--success-light); color:var(--success); border-color:transparent; }
 .ad-text{ font-size:13.5px; color:var(--ink); line-height:1.65; white-space:pre-wrap; }
-
-/* STREAMING */
-.streaming-card{ border:1px solid var(--accent-mid); border-radius:var(--radius-sm); padding:14px; margin-bottom:10px; background:var(--accent-light); }
-.streaming-text{ font-size:13.5px; color:var(--ink); line-height:1.65; white-space:pre-wrap; }
-.streaming-cursor{ display:inline-block; width:2px; height:14px; background:var(--accent); animation:blink .7s infinite; vertical-align:middle; margin-left:2px; }
-@keyframes blink{ 0%,100%{ opacity:1; } 50%{ opacity:0; } }
-
-/* LOCKED CARD */
+.loading-card{ border:1px solid var(--accent-mid); border-radius:var(--radius-sm); padding:20px; text-align:center; background:var(--accent-light); }
+.loading-dots{ display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:10px; }
+.loading-dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); animation:bounce .8s infinite; }
+.loading-dot:nth-child(2){ animation-delay:.15s; }
+.loading-dot:nth-child(3){ animation-delay:.3s; }
+@keyframes bounce{ 0%,100%{ transform:translateY(0); opacity:.4; } 50%{ transform:translateY(-6px); opacity:1; } }
+.loading-text{ font-size:13px; color:var(--accent); font-weight:500; }
 .locked-card{ border:1px dashed var(--border); border-radius:var(--radius-sm); padding:20px; text-align:center; margin-bottom:10px; background:var(--bg); }
 .locked-icon{ font-size:22px; margin-bottom:8px; opacity:.5; }
 .locked-text{ font-size:13px; color:var(--ink3); margin-bottom:12px; line-height:1.5; }
-.locked-upgrade{ font-size:12px; font-weight:500; padding:7px 18px; background:var(--accent); color:#fff; border:none; border-radius:20px; cursor:pointer; font-family:var(--font-b); transition:background .15s; }
+.locked-upgrade{ font-size:12px; font-weight:500; padding:7px 18px; background:var(--accent); color:#fff; border:none; border-radius:20px; cursor:pointer; font-family:var(--font-b); }
 .locked-upgrade:hover{ background:var(--accent2); }
-
-/* UPGRADE MODAL */
 .modal-overlay{ position:fixed; inset:0; background:rgba(15,14,13,0.5); display:none; align-items:center; justify-content:center; z-index:500; padding:1.5rem; backdrop-filter:blur(4px); }
 .modal-overlay.show{ display:flex; }
 .modal{ background:#fff; border-radius:var(--radius); padding:2rem; width:100%; max-width:480px; box-shadow:0 20px 60px rgba(15,14,13,0.15); }
 .modal-title{ font-family:var(--font-d); font-size:26px; font-style:italic; color:var(--ink); margin-bottom:6px; }
 .modal-sub{ font-size:13px; color:var(--ink3); margin-bottom:1.5rem; }
 .plan-cards{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:1.5rem; }
-.plan-card{ border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; cursor:pointer; transition:all .15s; }
+.plan-card{ border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; }
 .plan-card.featured{ border:2px solid var(--accent); position:relative; }
 .plan-badge{ position:absolute; top:-11px; left:50%; transform:translateX(-50%); font-size:11px; font-weight:500; padding:2px 12px; border-radius:20px; background:var(--accent); color:#fff; white-space:nowrap; }
 .plan-name{ font-size:13px; font-weight:500; color:var(--ink); margin-bottom:4px; }
 .plan-price{ font-size:24px; font-weight:500; color:var(--ink); margin-bottom:2px; }
 .plan-price span{ font-size:13px; font-weight:400; color:var(--ink3); }
 .plan-period{ font-size:11px; color:var(--ink3); margin-bottom:12px; }
-.plan-feat{ font-size:12px; color:var(--ink2); margin-bottom:5px; display:flex; align-items:flex-start; gap:6px; line-height:1.4; }
+.plan-feat{ font-size:12px; color:var(--ink2); margin-bottom:5px; display:flex; gap:6px; }
 .plan-feat-check{ color:var(--success); flex-shrink:0; }
-.plan-btn{ width:100%; padding:9px; font-size:13px; font-weight:500; border-radius:var(--radius-sm); border:none; cursor:pointer; margin-top:12px; font-family:var(--font-b); transition:all .15s; }
+.plan-btn{ width:100%; padding:9px; font-size:13px; font-weight:500; border-radius:var(--radius-sm); border:none; cursor:pointer; margin-top:12px; font-family:var(--font-b); }
 .plan-btn-outline{ background:var(--bg2); color:var(--ink2); }
 .plan-btn-solid{ background:var(--accent); color:#fff; }
-.plan-btn-solid:hover{ background:var(--accent2); }
-.modal-close{ width:100%; padding:10px; background:transparent; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:13px; color:var(--ink3); cursor:pointer; font-family:var(--font-b); transition:all .15s; }
-.modal-close:hover{ background:var(--bg2); }
-
+.modal-close{ width:100%; padding:10px; background:transparent; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:13px; color:var(--ink3); cursor:pointer; font-family:var(--font-b); }
 .alert{ border-radius:var(--radius-sm); padding:11px 14px; font-size:13px; line-height:1.5; margin-bottom:1rem; display:none; }
 .alert.error{ background:var(--danger-light); color:var(--danger); }
 .alert.show{ display:block; }
 </style>
 </head>
 <body>
-
 <nav class="nav">
   <a class="nav-brand" href="index.html">
-    <div class="nav-logo">
-      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-    </div>
+    <div class="nav-logo"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
     <div class="nav-name">Suukie<span>AI</span></div>
   </a>
   <div class="nav-right">
@@ -201,14 +153,10 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 </nav>
 
 <div class="page">
-
-  <div class="usage-card" id="usage-card">
+  <div class="usage-card">
     <div class="usage-inner">
       <div class="usage-text" id="usage-text">
-        <div class="usage-label">
-          <span>Generations this month</span>
-          <span id="usage-count">0 / 3</span>
-        </div>
+        <div class="usage-label"><span>Generations this month</span><span id="usage-count">0 / 3</span></div>
         <div class="usage-bar-bg"><div class="usage-bar-fill" id="usage-bar" style="width:0%"></div></div>
         <div class="usage-note" id="usage-note">3 free generations per month</div>
       </div>
@@ -220,18 +168,9 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
     <div class="card-title">Generate ad copy</div>
     <div class="card-sub">Fill in your product details below</div>
     <div id="form-alert" class="alert error"></div>
-    <div class="field">
-      <label>Product name <span>*</span></label>
-      <input type="text" id="f-product" placeholder="e.g. FitTrack Pro smartwatch"/>
-    </div>
-    <div class="field">
-      <label>Product description <span>*</span></label>
-      <textarea id="f-description" placeholder="Describe your product in 2–3 sentences. What does it do? Who is it for?"></textarea>
-    </div>
-    <div class="field">
-      <label>Target audience <span>*</span></label>
-      <input type="text" id="f-audience" placeholder="e.g. fitness enthusiasts aged 25–40"/>
-    </div>
+    <div class="field"><label>Product name <span>*</span></label><input type="text" id="f-product" placeholder="e.g. Nike Air Max 270"/></div>
+    <div class="field"><label>Product description <span>*</span></label><textarea id="f-description" placeholder="Describe your product in 2–3 sentences"></textarea></div>
+    <div class="field"><label>Target audience <span>*</span></label><input type="text" id="f-audience" placeholder="e.g. athletes aged 18-35"/></div>
     <div class="field">
       <label>Tone of voice <span>*</span></label>
       <div class="tone-grid">
@@ -254,26 +193,22 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
       <div class="spinner" id="gen-spinner"></div>
       <span id="gen-btn-text">✦ Generate my ads</span>
     </button>
-    <div class="gen-note" id="gen-note">Free plan · 3 generations/month · results appear instantly</div>
+    <div class="gen-note" id="gen-note">Free plan · 3 generations/month · instant results</div>
   </div>
 
-  <div class="results-card" id="results-card">
+  <div class="results-card">
     <div class="results-empty" id="results-empty">
       <div class="results-empty-icon">✦</div>
       <div class="results-empty-text">Your generated ads will<br>appear here instantly</div>
     </div>
     <div id="results-content" style="display:none">
       <div class="results-head">
-        <div>
-          <div class="results-title">Your ad variations</div>
-          <div class="results-sub" id="results-sub">—</div>
-        </div>
+        <div><div class="results-title">Your ad variations</div><div class="results-sub" id="results-sub">—</div></div>
         <button class="regen-btn" onclick="handleGenerate()">↺ Regenerate</button>
       </div>
       <div id="ads-list"></div>
     </div>
   </div>
-
 </div>
 
 <div class="modal-overlay" id="upgrade-modal" onclick="closeModalOutside(event)">
@@ -287,19 +222,16 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
         <div class="plan-period">Forever free</div>
         <div class="plan-feat"><span class="plan-feat-check">✓</span> 3 generations/month</div>
         <div class="plan-feat"><span class="plan-feat-check">✓</span> 3 ad variations</div>
-        <div class="plan-feat"><span class="plan-feat-check">✓</span> 2 platforms</div>
         <button class="plan-btn plan-btn-outline">Current plan</button>
       </div>
       <div class="plan-card featured">
         <div class="plan-badge">✦ Most popular</div>
         <div class="plan-name" style="color:var(--accent)">Pro</div>
         <div class="plan-price" style="color:var(--accent)">₹299 <span>/mo</span></div>
-        <div class="plan-period">or ₹1,999/year — save 44%</div>
-        <div class="plan-feat"><span class="plan-feat-check">✓</span> <strong>Unlimited</strong> generations</div>
+        <div class="plan-period">or ₹1,999/year</div>
+        <div class="plan-feat"><span class="plan-feat-check">✓</span> Unlimited generations</div>
         <div class="plan-feat"><span class="plan-feat-check">✓</span> 5 ad variations</div>
-        <div class="plan-feat"><span class="plan-feat-check">✓</span> All 3 platforms</div>
-        <div class="plan-feat"><span class="plan-feat-check">✓</span> Instant results</div>
-        <button class="plan-btn plan-btn-solid" onclick="goToPricing()">Upgrade now →</button>
+        <button class="plan-btn plan-btn-solid" onclick="window.location.href='pricing.html'">Upgrade now →</button>
       </div>
     </div>
     <button class="modal-close" onclick="closeUpgradeModal()">Maybe later</button>
@@ -310,7 +242,6 @@ body{ background:var(--bg); font-family:var(--font-b); color:var(--ink); min-hei
 var SUPABASE_URL = 'https://wqhyeuchtzahchrgtksu.supabase.co';
 var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxaHlldWNodHphaGNocmd0a3N1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NzE2NzQsImV4cCI6MjA5NTQ0NzY3NH0.fdlEvt7MsM2Wbdg5yUWJC0xAH8Pq5-YvWLvEXTnWgUI';
 var GROQ_API_KEY = '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';
-var GROQ_MODEL = 'llama3-8b-8192';
 var FREE_LIMIT = 3;
 
 var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -318,17 +249,16 @@ var currentUser = null;
 var userProfile = null;
 
 async function init() {
-  var sessionResult = await sb.auth.getSession();
-  var session = sessionResult.data.session;
-  if (!session) { window.location.href = 'login.html'; return; }
-  currentUser = session.user;
+  var r = await sb.auth.getSession();
+  if (!r.data.session) { window.location.href = 'login.html'; return; }
+  currentUser = r.data.session.user;
   document.getElementById('avatar-letter').textContent = currentUser.email.charAt(0).toUpperCase();
   await loadProfile();
 }
 
 async function loadProfile() {
-  var result = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
-  if (result.data) { userProfile = result.data; updateUsageUI(); }
+  var r = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+  if (r.data) { userProfile = r.data; updateUsageUI(); }
 }
 
 function updateUsageUI() {
@@ -338,30 +268,21 @@ function updateUsageUI() {
   var pill = document.getElementById('plan-pill');
   if (isPro) {
     pill.textContent = '✦ Pro'; pill.className = 'plan-pill plan-pro';
-    var utext = document.getElementById('usage-text');
-    utext.innerHTML = '<div style="font-size:13px;font-weight:500;color:var(--accent)">✦ Pro plan — unlimited generations active</div>';
+    document.getElementById('usage-text').innerHTML = '<div style="font-size:13px;font-weight:500;color:var(--accent)">✦ Pro plan — unlimited generations active</div>';
     document.getElementById('upgrade-btn-sm').style.display = 'none';
-    document.getElementById('gen-note').textContent = 'Pro plan · unlimited · results appear instantly';
+    document.getElementById('gen-note').textContent = 'Pro plan · unlimited · instant results';
   } else {
-    pill.textContent = 'Free plan'; pill.className = 'plan-pill plan-free';
     var pct = Math.min((used / FREE_LIMIT) * 100, 100);
     document.getElementById('usage-count').textContent = used + ' / ' + FREE_LIMIT;
     document.getElementById('usage-bar').style.width = pct + '%';
-    var bar = document.getElementById('usage-bar');
     var note = document.getElementById('usage-note');
     if (used >= FREE_LIMIT) {
-      bar.className = 'usage-bar-fill full';
-      note.textContent = 'Monthly limit reached — upgrade to continue';
-      note.className = 'usage-note warn';
+      document.getElementById('usage-bar').className = 'usage-bar-fill full';
+      note.textContent = 'Monthly limit reached — upgrade to continue'; note.className = 'usage-note warn';
     } else if (used >= FREE_LIMIT - 1) {
-      bar.className = 'usage-bar-fill warn';
-      note.textContent = '1 generation left — upgrade for unlimited';
-      note.className = 'usage-note warn';
-    } else {
-      bar.className = 'usage-bar-fill';
-      note.textContent = FREE_LIMIT + ' free generations per month';
+      document.getElementById('usage-bar').className = 'usage-bar-fill warn';
+      note.textContent = '1 generation left — upgrade for unlimited'; note.className = 'usage-note warn';
     }
-    document.getElementById('gen-note').textContent = 'Free plan · ' + FREE_LIMIT + ' generations/month · results appear instantly';
   }
 }
 
@@ -369,20 +290,9 @@ function selectTone(el) {
   document.querySelectorAll('.tone-chip').forEach(function(c){ c.classList.remove('selected'); });
   el.classList.add('selected');
 }
-
 function togglePlat(el) { el.classList.toggle('selected'); }
-
-function getSelectedTone() {
-  var sel = document.querySelector('.tone-chip.selected');
-  return sel ? sel.textContent.trim() : 'Professional';
-}
-
-function getSelectedPlatforms() {
-  var chips = document.querySelectorAll('.plat-chip.selected');
-  var plats = [];
-  chips.forEach(function(c){ plats.push(c.getAttribute('data-plat')); });
-  return plats;
-}
+function getSelectedTone() { var s = document.querySelector('.tone-chip.selected'); return s ? s.textContent.trim() : 'Professional'; }
+function getSelectedPlatforms() { var r=[]; document.querySelectorAll('.plat-chip.selected').forEach(function(c){ r.push(c.getAttribute('data-plat')); }); return r; }
 
 async function handleGenerate() {
   var isPro = userProfile && userProfile.plan === 'pro';
@@ -400,22 +310,22 @@ async function handleGenerate() {
 
   hideFormAlert();
   setGenerating(true);
+  showLoading(product, tone, platforms);
 
   var maxAds = isPro ? 5 : 3;
-  var prompt = 'You are an expert ad copywriter. Write exactly ' + maxAds + ' ad variations for the following product.\n\n' +
+  var prompt = 'You are an expert ad copywriter. Write exactly ' + maxAds + ' high-converting ad variations.\n\n' +
     'Product: ' + product + '\n' +
     'Description: ' + description + '\n' +
     'Audience: ' + audience + '\n' +
     'Tone: ' + tone + '\n' +
     'Platforms: ' + platforms.join(', ') + '\n\n' +
-    'Format each ad exactly like this:\n' +
-    '**[PLATFORM - TYPE]**\n[ad copy here]\n\n' +
-    'Write ' + maxAds + ' variations total, one for each platform/format combination. Keep each ad concise and high-converting.';
-
-  document.getElementById('results-empty').style.display = 'none';
-  document.getElementById('results-content').style.display = 'block';
-  document.getElementById('results-sub').textContent = product + ' · ' + tone + ' · ' + platforms.join(', ');
-  document.getElementById('ads-list').innerHTML = '<div class="streaming-card"><div class="streaming-text" id="stream-text"></div><span class="streaming-cursor"></span></div>';
+    'Format each ad exactly like this (include the dashes):\n' +
+    '---\n' +
+    'PLATFORM: [platform name]\n' +
+    'TYPE: [Short/Long/Caption/Story/Headline]\n' +
+    'AD:\n' +
+    '[your ad copy here]\n\n' +
+    'Write ' + maxAds + ' ads total. Make each one unique and compelling.';
 
   try {
     var response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -425,95 +335,101 @@ async function handleGenerate() {
         'Authorization': 'Bearer ' + GROQ_API_KEY
       },
       body: JSON.stringify({
-        model: GROQ_MODEL,
+        model: 'llama3-8b-8192',
         messages: [{ role: 'user', content: prompt }],
-        max_tokens: 1200,
-        temperature: 0.8,
-        stream: true
+        max_tokens: 1500,
+        temperature: 0.8
       })
     });
 
-    var reader = response.body.getReader();
-    var decoder = new TextDecoder();
-    var fullText = '';
-    var streamEl = document.getElementById('stream-text');
-
-    while (true) {
-      var result = await reader.read();
-      if (result.done) break;
-      var chunk = decoder.decode(result.value);
-      var lines = chunk.split('\n');
-      for (var i = 0; i < lines.length; i++) {
-        var line = lines[i].trim();
-        if (line.startsWith('data: ') && line !== 'data: [DONE]') {
-          try {
-            var data = JSON.parse(line.slice(6));
-            var delta = data.choices[0].delta.content;
-            if (delta) {
-              fullText += delta;
-              streamEl.textContent = fullText;
-            }
-          } catch(e) {}
-        }
-      }
+    if (!response.ok) {
+      var errData = await response.json();
+      throw new Error(errData.error ? errData.error.message : 'API error ' + response.status);
     }
+
+    var data = await response.json();
+    var text = data.choices[0].message.content;
 
     var newCount = used + 1;
     await sb.from('profiles').update({ generations_used: newCount }).eq('id', currentUser.id);
-    userProfile.generations_used = newCount;
+    if (userProfile) userProfile.generations_used = newCount;
     updateUsageUI();
 
-    renderAdCards(fullText, isPro);
+    renderAdCards(text, isPro, product, tone, platforms);
 
   } catch(err) {
-    document.getElementById('ads-list').innerHTML = '<div class="alert error show">Something went wrong — please try again.</div>';
-    console.error(err);
+    document.getElementById('results-empty').style.display = 'none';
+    document.getElementById('results-content').style.display = 'block';
+    document.getElementById('results-sub').textContent = 'Error occurred';
+    document.getElementById('ads-list').innerHTML = '<div class="alert error show">Error: ' + err.message + '<br><br>Please try again in a few seconds.</div>';
+    console.error('Groq error:', err);
   }
 
   setGenerating(false);
 }
 
-function renderAdCards(text, isPro) {
+function showLoading(product, tone, platforms) {
+  document.getElementById('results-empty').style.display = 'none';
+  document.getElementById('results-content').style.display = 'block';
+  document.getElementById('results-sub').textContent = product + ' · ' + tone + ' · ' + platforms.join(', ');
+  document.getElementById('ads-list').innerHTML =
+    '<div class="loading-card">' +
+    '<div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>' +
+    '<div class="loading-text">Generating your ads with AI...</div>' +
+    '</div>';
+}
+
+function renderAdCards(text, isPro, product, tone, platforms) {
   var adsList = document.getElementById('ads-list');
   adsList.innerHTML = '';
 
-  var sections = text.split(/\n\n+/);
+  var sections = text.split('---').filter(function(s){ return s.trim().length > 30; });
   var cards = [];
 
-  sections.forEach(function(section) {
-    section = section.trim();
-    if (section.length < 20) return;
-
+  if (sections.length === 0) {
     var card = document.createElement('div');
     card.className = 'ad-card';
-
-    var lines = section.split('\n');
-    var header = lines[0].replace(/\*\*/g, '').trim();
-    var body = lines.slice(1).join('\n').trim();
-    if (!body) { body = section; header = 'Ad Variation'; }
-
-    var dotClass = 'dot-gen';
-    if (header.toLowerCase().includes('facebook')) dotClass = 'dot-fb';
-    else if (header.toLowerCase().includes('instagram')) dotClass = 'dot-ig';
-    else if (header.toLowerCase().includes('google')) dotClass = 'dot-gg';
-
-    card.innerHTML =
-      '<div class="ad-card-head">' +
-        '<div class="ad-platform"><div class="plat-dot ' + dotClass + '"></div>' + header + '</div>' +
-        '<button class="ad-copy-btn" onclick="copyAd(this)">Copy</button>' +
-      '</div>' +
-      '<div class="ad-text">' + body + '</div>';
-
-    cards.push(card);
-  });
-
-  if (cards.length === 0) {
-    var card = document.createElement('div');
-    card.className = 'ad-card';
-    card.innerHTML = '<div class="ad-text">' + text + '</div><button class="ad-copy-btn" style="margin-top:8px" onclick="copyAd(this)">Copy all</button>';
+    card.innerHTML = '<div class="ad-card-head"><div class="ad-platform"><div class="plat-dot dot-gen"></div>Ad Copy</div><button class="ad-copy-btn" onclick="copyAd(this)">Copy</button></div><div class="ad-text">' + text.trim() + '</div>';
     adsList.appendChild(card);
     return;
   }
+
+  sections.forEach(function(section) {
+    var lines = section.trim().split('\n');
+    var platform = 'Ad';
+    var adType = '';
+    var adLines = [];
+    var inAd = false;
+
+    lines.forEach(function(line) {
+      line = line.trim();
+      if (line.startsWith('PLATFORM:')) { platform = line.replace('PLATFORM:', '').trim(); }
+      else if (line.startsWith('TYPE:')) { adType = line.replace('TYPE:', '').trim(); }
+      else if (line === 'AD:') { inAd = true; }
+      else if (inAd && line) { adLines.push(line); }
+    });
+
+    if (adLines.length === 0) { adLines = lines.filter(function(l){ return l && !l.startsWith('PLATFORM:') && !l.startsWith('TYPE:') && l !== 'AD:'; }); }
+
+    var dotClass = 'dot-gen';
+    var pl = platform.toLowerCase();
+    if (pl.includes('facebook')) dotClass = 'dot-fb';
+    else if (pl.includes('instagram')) dotClass = 'dot-ig';
+    else if (pl.includes('google')) dotClass = 'dot-gg';
+
+    var label = platform + (adType ? ' · ' + adType : '');
+    var adText = adLines.join('\n');
+
+    var card = document.createElement('div');
+    card.className = 'ad-card';
+    card.innerHTML =
+      '<div class="ad-card-head">' +
+      '<div class="ad-platform"><div class="plat-dot ' + dotClass + '"></div>' + label + '</div>' +
+      '<button class="ad-copy-btn" onclick="copyAd(this)">Copy</button>' +
+      '</div>' +
+      '<div class="ad-text">' + adText + '</div>';
+    cards.push(card);
+  });
 
   var showCount = isPro ? cards.length : Math.min(3, cards.length);
   for (var i = 0; i < showCount; i++) { adsList.appendChild(cards[i]); }
@@ -535,12 +451,9 @@ function copyAd(btn) {
 }
 
 function setGenerating(loading) {
-  var btn = document.getElementById('gen-btn');
-  var spinner = document.getElementById('gen-spinner');
-  var text = document.getElementById('gen-btn-text');
-  btn.disabled = loading;
-  spinner.style.display = loading ? 'block' : 'none';
-  text.textContent = loading ? 'Generating...' : '✦ Generate my ads';
+  document.getElementById('gen-btn').disabled = loading;
+  document.getElementById('gen-spinner').style.display = loading ? 'block' : 'none';
+  document.getElementById('gen-btn-text').textContent = loading ? 'Generating...' : '✦ Generate my ads';
 }
 
 function showFormAlert(msg) { var el = document.getElementById('form-alert'); el.textContent = msg; el.classList.add('show'); }
@@ -548,9 +461,8 @@ function hideFormAlert() { document.getElementById('form-alert').classList.remov
 function showUpgradeModal() { document.getElementById('upgrade-modal').classList.add('show'); }
 function closeUpgradeModal() { document.getElementById('upgrade-modal').classList.remove('show'); }
 function closeModalOutside(e) { if (e.target === document.getElementById('upgrade-modal')) closeUpgradeModal(); }
-function goToPricing() { window.location.href = 'pricing.html'; }
 function toggleMenu() { document.getElementById('nav-menu').classList.toggle('show'); }
-document.addEventListener('click', function(e) { if (!e.target.closest('.nav-avatar')) document.getElementById('nav-menu').classList.remove('show'); });
+document.addEventListener('click', function(e){ if (!e.target.closest('.nav-avatar')) document.getElementById('nav-menu').classList.remove('show'); });
 async function handleSignOut() { await sb.auth.signOut(); window.location.href = 'login.html'; }
 
 init();
