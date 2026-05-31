@@ -1074,4 +1074,19 @@ function setBtnLoading(btnId,spinnerId,textId,loadingText,defaultText){
   var loading=!!loadingText;
   btn.disabled=loading;
   spinner.style.display=loading?'block':'none';
-  text.textContent=loading?loadingText:defaultT
+  text.textContent=loading?loadingText:defaultText;
+}
+
+function showAlert(id,msg){var el=document.getElementById(id);el.textContent=msg;el.classList.add('show');}
+function hideAlert(id){document.getElementById(id).classList.remove('show');}
+function showUpgradeModal(){document.getElementById('upgrade-modal').classList.add('show');}
+function closeUpgradeModal(){document.getElementById('upgrade-modal').classList.remove('show');}
+function closeModalOutside(e){if(e.target===document.getElementById('upgrade-modal'))closeUpgradeModal();}
+function toggleMenu(){document.getElementById('nav-menu').classList.toggle('show');}
+document.addEventListener('click',function(e){if(!e.target.closest('.nav-avatar'))document.getElementById('nav-menu').classList.remove('show');});
+async function handleSignOut(){await sb.auth.signOut();window.location.href='login.html';}
+
+init();
+</script>
+</body>
+</html>
