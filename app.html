@@ -839,76 +839,170 @@ async function handlePoster(){
   document.getElementById('poster-empty').style.display='none';
   document.getElementById('poster-content').style.display='block';
   document.getElementById('poster-sub').textContent=product+' · '+selectedLayout;
-  document.getElementById('poster-output').innerHTML='<div style="text-align:center;padding:2.5rem;background:var(--bg2);border-radius:var(--radius-sm)"><div style="width:40px;height:40px;border:3px solid var(--accent-light);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px"></div><div style="font-size:13px;color:var(--ink);font-weight:500">Generating your poster...</div><div style="font-size:11.5px;color:var(--ink3);margin-top:5px">Takes about 10–15 seconds</div></div>';
+  document.getElementById('poster-output').innerHTML='<div style="text-align:center;padding:2.5rem;background:var(--bg2);border-radius:var(--radius-sm)"><div style="width:40px;height:40px;border:3px solid var(--accent-light);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px"></div><div style="font-size:13px;color:var(--ink);font-weight:500">Creating your poster...</div><div style="font-size:11.5px;color:var(--ink3);margin-top:5px">~15 seconds</div></div>';
 
-  var layoutPrompts={
-    bold:'dark navy blue background, bold white typography, dramatic lighting, premium advertisement',
-    minimal:'clean white minimal background, elegant black typography, lots of whitespace, luxury',
-    gradient:'vibrant purple pink gradient background, bold white text, modern Instagram ad',
-    neon:'pitch black background, glowing neon purple accents, electric atmosphere, cyberpunk',
-    warm:'warm orange peach gradient, energetic lifestyle, bold white text, dynamic',
-    luxury:'dark charcoal background, gold accents, ultra premium luxury brand poster'
-  };
-
-  var prompt=product+' advertisement poster, '+layoutPrompts[selectedLayout]+', tagline "'+tagline+'", high quality commercial photography, social media ad, 4k';
-  var encodedPrompt=encodeURIComponent(prompt);
-  var seed=Math.floor(Math.random()*99999);
-  var imgUrl='https://image.pollinations.ai/prompt/'+encodedPrompt+'?width='+selectedFormat.w+'&height='+selectedFormat.h+'&nologo=true&enhance=true&model=flux&seed='+seed;
-
-  var img=new Image();
-  img.crossOrigin='anonymous';
-  img.onload=function(){
-    var canvas=document.createElement('canvas');
-    canvas.width=selectedFormat.w;canvas.height=selectedFormat.h;
-    var ctx=canvas.getContext('2d');
-    ctx.drawImage(img,0,0,canvas.width,canvas.height);
-    var cfgs={
-      bold:{g:['rgba(0,0,0,0.2)','rgba(0,0,0,0.85)'],tc:'#ffffff',ac:'#7c6ff9'},
-      minimal:{g:['rgba(255,255,255,0.05)','rgba(255,255,255,0.65)'],tc:'#0f0e0d',ac:'#5b4ef8'},
-      gradient:{g:['rgba(91,78,248,0.1)','rgba(193,53,132,0.75)'],tc:'#ffffff',ac:'#ffffff'},
-      neon:{g:['rgba(0,0,0,0.1)','rgba(0,0,0,0.85)'],tc:'#ffffff',ac:'#7c6ff9'},
-      warm:{g:['rgba(255,107,53,0.05)','rgba(200,80,20,0.7)'],tc:'#ffffff',ac:'#fff'},
-      luxury:{g:['rgba(0,0,0,0.1)','rgba(0,0,0,0.8)'],tc:'#ffffff',ac:'#d4af37'}
-    };
-    var cfg=cfgs[selectedLayout]||cfgs.bold;
-    var grd=ctx.createLinearGradient(0,canvas.height*0.35,0,canvas.height);
-    grd.addColorStop(0,cfg.g[0]);grd.addColorStop(1,cfg.g[1]);
-    ctx.fillStyle=grd;ctx.fillRect(0,0,canvas.width,canvas.height);
-    if(uploadedImageData){
-      var uImg=new Image();
-      uImg.onload=function(){
-        var iw=canvas.width*0.5,ih=iw;
-        var ix=(canvas.width-iw)/2,iy=canvas.height*0.06;
-        ctx.save();ctx.shadowColor='rgba(0,0,0,0.35)';ctx.shadowBlur=35;
-        ctx.drawImage(uImg,ix,iy,iw,ih);ctx.restore();
-        drawPosterText(ctx,canvas,cfg,tagline,subtext,product);
-        finalizePoster(canvas,product);
-      };
-      uImg.src=uploadedImageData;
-    } else {
-      drawPosterText(ctx,canvas,cfg,tagline,subtext,product);
-      finalizePoster(canvas,product);
+  // Layout configs — pure canvas, no AI background
+  var layouts={
+    bold:{
+      bg:function(ctx,w,h){
+        var g=ctx.createLinearGradient(0,0,w,h);
+        g.addColorStop(0,'#0f0c29');g.addColorStop(0.5,'#1a1a4e');g.addColorStop(1,'#0a0a1a');
+        ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+        // Geometric accent shapes
+        ctx.save();ctx.globalAlpha=0.07;
+        ctx.fillStyle='#7c6ff9';
+        ctx.beginPath();ctx.arc(w*0.85,h*0.15,w*0.35,0,Math.PI*2);ctx.fill();
+        ctx.beginPath();ctx.arc(w*0.1,h*0.8,w*0.25,0,Math.PI*2);ctx.fill();
+        ctx.restore();
+      },
+      tc:'#ffffff',ac:'#7c6ff9',imgPos:'right'
+    },
+    minimal:{
+      bg:function(ctx,w,h){
+        ctx.fillStyle='#fafaf8';ctx.fillRect(0,0,w,h);
+        ctx.fillStyle='#f0eeea';ctx.fillRect(0,0,w,h*0.55);
+        ctx.save();ctx.globalAlpha=0.4;
+        ctx.strokeStyle='#e8e5e0';ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(0,h*0.55);ctx.lineTo(w,h*0.55);ctx.stroke();
+        ctx.restore();
+      },
+      tc:'#0f0e0d',ac:'#5b4ef8',imgPos:'center-top'
+    },
+    gradient:{
+      bg:function(ctx,w,h){
+        var g=ctx.createLinearGradient(0,0,w,h);
+        g.addColorStop(0,'#4f46e5');g.addColorStop(0.5,'#7c3aed');g.addColorStop(1,'#be185d');
+        ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+        ctx.save();ctx.globalAlpha=0.12;
+        ctx.fillStyle='#fff';
+        ctx.beginPath();ctx.arc(w*0.8,h*0.2,w*0.4,0,Math.PI*2);ctx.fill();
+        ctx.restore();
+      },
+      tc:'#ffffff',ac:'#ffffff',imgPos:'right'
+    },
+    neon:{
+      bg:function(ctx,w,h){
+        ctx.fillStyle='#030303';ctx.fillRect(0,0,w,h);
+        // Neon grid lines
+        ctx.save();ctx.globalAlpha=0.06;ctx.strokeStyle='#7c6ff9';ctx.lineWidth=1;
+        for(var i=0;i<w;i+=w*0.08){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,h);ctx.stroke();}
+        for(var j=0;j<h;j+=h*0.08){ctx.beginPath();ctx.moveTo(0,j);ctx.lineTo(w,j);ctx.stroke();}
+        ctx.restore();
+        // Neon glow circle
+        ctx.save();ctx.globalAlpha=0.15;
+        var rg=ctx.createRadialGradient(w*0.5,h*0.3,0,w*0.5,h*0.3,w*0.5);
+        rg.addColorStop(0,'#7c6ff9');rg.addColorStop(1,'transparent');
+        ctx.fillStyle=rg;ctx.fillRect(0,0,w,h);
+        ctx.restore();
+      },
+      tc:'#ffffff',ac:'#7c6ff9',imgPos:'center-top'
+    },
+    warm:{
+      bg:function(ctx,w,h){
+        var g=ctx.createLinearGradient(0,0,w,h);
+        g.addColorStop(0,'#ff6b35');g.addColorStop(0.6,'#f7941d');g.addColorStop(1,'#ffcd3c');
+        ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+        ctx.save();ctx.globalAlpha=0.1;
+        ctx.fillStyle='#fff';
+        ctx.beginPath();ctx.arc(w*0.85,h*0.1,w*0.45,0,Math.PI*2);ctx.fill();
+        ctx.restore();
+      },
+      tc:'#ffffff',ac:'#ffffff',imgPos:'right'
+    },
+    luxury:{
+      bg:function(ctx,w,h){
+        var g=ctx.createLinearGradient(0,0,w,h);
+        g.addColorStop(0,'#1a1208');g.addColorStop(0.5,'#2d2410');g.addColorStop(1,'#0d0b06');
+        ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+        // Gold border lines
+        ctx.save();ctx.globalAlpha=0.3;ctx.strokeStyle='#d4af37';ctx.lineWidth=2;
+        ctx.strokeRect(w*0.04,h*0.03,w*0.92,h*0.94);
+        ctx.globalAlpha=0.15;ctx.lineWidth=1;
+        ctx.strokeRect(w*0.055,h*0.045,w*0.89,h*0.91);
+        ctx.restore();
+      },
+      tc:'#ffffff',ac:'#d4af37',imgPos:'center-top'
     }
   };
-  img.onerror=function(){
-    var canvas=document.createElement('canvas');
-    canvas.width=selectedFormat.w;canvas.height=selectedFormat.h;
-    var ctx=canvas.getContext('2d');
-    var fallbacks={bold:['#1a1a2e','#16213e'],minimal:['#faf9f7','#f2f0ec'],gradient:['#5b4ef8','#c13584'],neon:['#050505','#0d0d1a'],warm:['#ff6b35','#f7931e'],luxury:['#1a1a1a','#2d2d2d']};
-    var textColors={bold:'#fff',minimal:'#0f0e0d',gradient:'#fff',neon:'#fff',warm:'#fff',luxury:'#fff'};
-    var accentColors={bold:'#7c6ff9',minimal:'#5b4ef8',gradient:'#fff',neon:'#7c6ff9',warm:'#fff',luxury:'#d4af37'};
-    var fb=fallbacks[selectedLayout]||fallbacks.bold;
-    var grd=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
-    grd.addColorStop(0,fb[0]);grd.addColorStop(1,fb[1]);
-    ctx.fillStyle=grd;ctx.fillRect(0,0,canvas.width,canvas.height);
-    drawPosterText(ctx,canvas,{tc:textColors[selectedLayout],ac:accentColors[selectedLayout]},tagline,subtext,product);
+
+  var cfg=layouts[selectedLayout]||layouts.bold;
+  var canvas=document.createElement('canvas');
+  canvas.width=selectedFormat.w;canvas.height=selectedFormat.h;
+  var ctx=canvas.getContext('2d');
+  var w=canvas.width,h=canvas.height;
+
+  // Draw background
+  cfg.bg(ctx,w,h);
+
+  // Draw product image if uploaded
+  if(uploadedImageData){
+    var uImg=new Image();
+    uImg.onload=function(){
+      drawProductImage(ctx,uImg,w,h,cfg.imgPos,cfg);
+      drawPosterText(ctx,canvas,cfg,tagline,subtext,product);
+      finalizePoster(canvas,product);
+    };
+    uImg.onerror=function(){
+      drawPosterText(ctx,canvas,cfg,tagline,subtext,product);
+      finalizePoster(canvas,product);
+    };
+    uImg.src=uploadedImageData;
+  } else {
+    // No image — draw a stylized product name placeholder
+    drawNoImagePlaceholder(ctx,w,h,product,cfg);
+    drawPosterText(ctx,canvas,cfg,tagline,subtext,product);
     finalizePoster(canvas,product);
-  };
-  img.src=imgUrl;
+  }
 
   await incrementUsage();
-  await saveHistory('poster',product,tagline,'',selectedLayout,'',imgUrl);
+  await saveHistory('poster',product,tagline,'',selectedLayout,'','canvas');
   setBtnLoading('poster-btn','poster-spinner','poster-btn-text',null,'🎨 Create poster');
+}
+
+function drawProductImage(ctx,img,w,h,pos,cfg){
+  var isStory=h>w;
+  var iw,ih,ix,iy;
+  if(pos==='right'){
+    // Image on right side, text on left
+    iw=isStory?w*0.75:w*0.48;
+    ih=iw;
+    ix=isStory?(w-iw)/2:w*0.5;
+    iy=isStory?h*0.08:h*0.1;
+  } else if(pos==='center-top'){
+    iw=isStory?w*0.65:w*0.42;
+    ih=iw;
+    ix=(w-iw)/2;
+    iy=isStory?h*0.06:h*0.06;
+  } else {
+    iw=w*0.5;ih=iw;ix=(w-iw)/2;iy=h*0.08;
+  }
+  // Drop shadow
+  ctx.save();
+  ctx.shadowColor='rgba(0,0,0,0.5)';
+  ctx.shadowBlur=60;
+  ctx.shadowOffsetY=20;
+  // Draw image maintaining aspect ratio
+  var aspectRatio=img.width/img.height;
+  var drawW=iw,drawH=ih;
+  if(aspectRatio>1){drawH=iw/aspectRatio;}
+  else{drawW=ih*aspectRatio;}
+  var drawX=ix+(iw-drawW)/2;
+  var drawY=iy+(ih-drawH)/2;
+  ctx.drawImage(img,drawX,drawY,drawW,drawH);
+  ctx.restore();
+}
+
+function drawNoImagePlaceholder(ctx,w,h,product,cfg){
+  var isStory=h>w;
+  // Draw large stylized product initial
+  ctx.save();
+  ctx.globalAlpha=0.08;
+  ctx.font='bold '+(isStory?w*0.5:w*0.35)+'px DM Sans,sans-serif';
+  ctx.fillStyle=cfg.ac;
+  ctx.textAlign='center';
+  ctx.fillText(product.charAt(0).toUpperCase(),w*0.5,isStory?h*0.42:h*0.45);
+  ctx.textAlign='left';
+  ctx.restore();
 }
 
 function drawPosterText(ctx,canvas,cfg,tagline,subtext,product){
