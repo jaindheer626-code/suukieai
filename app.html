@@ -417,6 +417,15 @@ body{background:var(--bg);font-family:var(--font-b);color:var(--ink);min-height:
       <div class="card-sub">Type any prompt — generate stunning images instantly</div>
       <div id="imagine-alert" class="alert error"></div>
       <div class="field">
+        <label>Product image (optional)</label>
+        <div id="imagine-upload-zone" style="border:2px dashed var(--border);border-radius:var(--radius-sm);padding:1rem;text-align:center;cursor:pointer;background:var(--bg);transition:all .15s;position:relative" onclick="document.getElementById('imagine-file').click()">
+          <input type="file" id="imagine-file" accept="image/*" style="display:none" onchange="handleImagineUpload(this)"/>
+          <div id="imagine-upload-placeholder"><div style="font-size:22px;margin-bottom:5px">📷</div><div style="font-size:12.5px;font-weight:500;color:var(--ink)">Upload product photo</div><div style="font-size:11px;color:var(--ink3);margin-top:2px">AI will place it into your generated scene</div></div>
+          <img id="imagine-upload-preview" style="display:none;width:100%;max-height:120px;object-fit:contain;border-radius:6px" alt="preview"/>
+          <div id="imagine-upload-remove" style="display:none;font-size:11.5px;color:var(--danger);margin-top:6px;cursor:pointer" onclick="clearImagineUpload(event)">✕ Remove image</div>
+        </div>
+      </div>
+      <div class="field">
         <label>Your prompt <span>*</span></label>
         <textarea id="imagine-prompt" placeholder="e.g. red Nike sneaker floating in space, neon purple lights, cinematic, 4k" style="min-height:90px"></textarea>
         <div style="font-size:11px;color:var(--ink3);margin-top:4px">Be specific — include colors, mood, lighting, style for best results</div>
@@ -456,7 +465,7 @@ body{background:var(--bg);font-family:var(--font-b);color:var(--ink);min-height:
         <div class="spinner" id="imagine-spinner"></div>
         <span id="imagine-btn-text">🖼 Generate image</span>
       </button>
-      <div class="gen-note" id="imagine-gen-note">Free · 1 image per generation · ~10 seconds</div>
+      <div class="gen-note" id="imagine-gen-note">Free plan · 1 image · ~15 seconds &nbsp;|&nbsp; Pro · 4 variations · priority</div>
     </div>
     <div class="results-card">
       <div class="results-empty" id="imagine-empty">
@@ -699,7 +708,7 @@ function renderAdCards(text,isPro,listId,tone,platforms){
     var isIg=pl.includes('instagram');
     var card=document.createElement('div');
     card.className='ad-card';
-    card.innerHTML='<div class="ad-card-head"><div class="ad-platform"><div class="plat-dot '+dotClass+'"></div>'+platform+(adType?' · '+adType:'')+'</div><div class="ad-btns"><button class="ad-btn" onclick="copyAd(this)">Copy</button>'+(isIg?'<button class="ad-btn" onclick="genHashtagsForAd(\''+encodeURIComponent(adText.substring(0,50))+'\')">+ Hashtags</button>':'')+'<button class="ad-btn poster-btn" onclick="fillPosterFromAd(\''+encodeURIComponent(lastProduct||platform)+'\')">→ Poster</button></div></div><div class="ad-text">'+adText+'</div><div class="char-count '+charClass+'">'+charCount+' / '+charLimit+' chars</div>';
+    card.innerHTML='<div class="ad-card-head"><div class="ad-platform"><div class="plat-dot '+dotClass+'"></div>'+platform+(adType?' · '+adType:'')+'</div><div class="ad-btns"><button class="ad-btn" onclick="copyAd(this)">Copy</button>'+(isIg?'<button class="ad-btn" onclick="genHashtagsForAd('+JSON.stringify(encodeURIComponent(adText.substring(0,50)))+')">+ Hashtags</button>':'')+'<button class="ad-btn poster-btn" onclick="fillPosterFromAd('+JSON.stringify(encodeURIComponent(lastProduct||platform))+')">→ Poster</button></div></div><div class="ad-text">'+adText+'</div><div class="char-count '+charClass+'">'+charCount+' / '+charLimit+' chars</div>';
     cards.push(card);
   });
   if(!cards.length){
@@ -1105,12 +1114,12 @@ function finalizePoster(canvas,product){
   document.getElementById('poster-output').innerHTML=
     '<img src="'+dataUrl+'" style="width:100%;border-radius:var(--radius-sm);display:block;margin-bottom:8px"/>'+
     '<div style="display:flex;gap:8px">'+
-    '<button onclick="downloadPoster(\''+dataUrl+'\',\''+product+'\')" class="poster-dl-btn" style="flex:1">⬇ Download PNG</button>'+
+    '<button onclick="downloadPoster(this)" class="poster-dl-btn" style="flex:1">⬇ Download PNG</button>'+
     '<button onclick="handlePoster()" style="padding:10px 14px;border:1px solid var(--border);background:transparent;border-radius:var(--radius-sm);font-size:12.5px;color:var(--ink2);cursor:pointer;font-family:var(--font-b)">↺ New</button>'+
     '</div>';
 }
 
-function downloadPoster(dataUrl,product){
+function downloadPoster(btn){var dataUrl=btn.closest('div').previousElementSibling.src;var product='poster';
   var a=document.createElement('a');
   a.href=dataUrl;
   a.download='suukieai-'+product.replace(/\s+/g,'-').toLowerCase()+'.png';
@@ -1247,6 +1256,34 @@ function selectImagineFormat(el){
   imagineFormat={w:parseInt(el.getAttribute('data-w')),h:parseInt(el.getAttribute('data-h'))};
 }
 
+var imagineUploadData=null;
+
+function handleImagineUpload(input){
+  var file=input.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    imagineUploadData=e.target.result;
+    document.getElementById('imagine-upload-placeholder').style.display='none';
+    var preview=document.getElementById('imagine-upload-preview');
+    preview.src=imagineUploadData;preview.style.display='block';
+    document.getElementById('imagine-upload-remove').style.display='block';
+    document.getElementById('imagine-upload-zone').style.borderColor='var(--accent)';
+    document.getElementById('imagine-upload-zone').style.background='var(--accent-light)';
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearImagineUpload(e){
+  e.stopPropagation();
+  imagineUploadData=null;
+  document.getElementById('imagine-upload-placeholder').style.display='block';
+  document.getElementById('imagine-upload-preview').style.display='none';
+  document.getElementById('imagine-upload-remove').style.display='none';
+  document.getElementById('imagine-upload-zone').style.borderColor='';
+  document.getElementById('imagine-upload-zone').style.background='var(--bg)';
+  document.getElementById('imagine-file').value='';
+}
+
 async function handleImagine(){
   var isPro=userProfile&&userProfile.plan==='pro';
   var used=userProfile?(userProfile.generations_used||0):0;
@@ -1275,33 +1312,91 @@ async function handleImagine(){
   var seed=seedVal?parseInt(seedVal):Math.floor(Math.random()*999999);
   document.getElementById('imagine-seed').value=seed;
 
-  var fullPrompt=prompt+', '+style+(negative?', NOT: '+negative:'');
+  // Build prompt — if image uploaded, include it as reference context in prompt
+  var uploadNote=imagineUploadData?'product shown in image, ':'';
+  var fullPrompt=uploadNote+prompt+', '+style+(negative?', avoid: '+negative:'');
   var encoded=encodeURIComponent(fullPrompt);
   var imgUrl='https://image.pollinations.ai/prompt/'+encoded+'?width='+imagineFormat.w+'&height='+imagineFormat.h+'&nologo=true&enhance=true&model=flux&seed='+seed;
 
+  // Show loading with time estimate
+  var isPro2=userProfile&&userProfile.plan==='pro';
+  document.getElementById('imagine-output').innerHTML=
+    '<div style="text-align:center;padding:3rem;background:var(--bg2);border-radius:var(--radius-sm)">'+
+    '<div style="width:44px;height:44px;border:3px solid var(--accent-light);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px"></div>'+
+    '<div style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:6px">Generating your image...</div>'+
+    '<div style="font-size:12px;color:var(--ink3);margin-bottom:10px">'+prompt.substring(0,60)+(prompt.length>60?'...':'')+'</div>'+
+    (imagineUploadData?'<div style="font-size:11.5px;color:var(--accent);background:var(--accent-light);padding:5px 12px;border-radius:20px;display:inline-block">✓ Using your product image</div>':'')+
+    '</div>';
+
+  // If product image uploaded — composite it with the AI background
   var img=new Image();
   img.onload=async function(){
-    var shortPrompt=prompt.substring(0,30).replace(/[^a-z0-9]/gi,'-').toLowerCase();
-    document.getElementById('imagine-output').innerHTML=
-      '<img src="'+imgUrl+'" style="width:100%;border-radius:var(--radius-sm);display:block;margin-bottom:10px" alt="Generated image"/>'+
-      '<div style="display:flex;gap:8px;flex-wrap:wrap">'+
-      '<a href="'+imgUrl+'" download="suukieai-'+shortPrompt+'.jpg" target="_blank" style="flex:1;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font-b);display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none">⬇ Download image</a>'+
-      '<button onclick="handleImagine()" style="padding:10px 14px;border:1px solid var(--border);background:transparent;border-radius:var(--radius-sm);font-size:12.5px;color:var(--ink2);cursor:pointer;font-family:var(--font-b)">↺ Regenerate</button>'+
-      '</div>'+
-      '<div style="margin-top:10px;background:var(--bg2);border-radius:var(--radius-sm);padding:10px 12px">'+
-      '<div style="font-size:11px;font-weight:500;color:var(--ink3);margin-bottom:4px">SEED USED</div>'+
-      '<div style="font-size:12px;color:var(--ink);font-family:monospace">'+seed+'</div>'+
-      '<div style="font-size:11px;color:var(--ink3);margin-top:3px">Save this seed to recreate the same image</div>'+
-      '</div>';
-    await incrementUsage();
-    await saveHistory('imagine',prompt,'',style,'','',imgUrl);
-    setBtnLoading('imagine-btn','imagine-spinner','imagine-btn-text',null,'🖼 Generate image');
+    // If user uploaded a product image, composite it onto the generated image
+    if(imagineUploadData){
+      var canvas=document.createElement('canvas');
+      canvas.width=imagineFormat.w;canvas.height=imagineFormat.h;
+      var ctx=canvas.getContext('2d');
+      // Draw AI background
+      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      // Add gradient overlay at bottom for text/product area
+      var grd=ctx.createLinearGradient(0,canvas.height*0.5,0,canvas.height);
+      grd.addColorStop(0,'rgba(0,0,0,0)');
+      grd.addColorStop(1,'rgba(0,0,0,0.4)');
+      ctx.fillStyle=grd;ctx.fillRect(0,0,canvas.width,canvas.height);
+      // Draw product image in center
+      var pImg=new Image();
+      pImg.onload=function(){
+        var pw=canvas.width*0.55,ph=pw;
+        var aspect=pImg.width/pImg.height;
+        if(aspect>1)ph=pw/aspect;else pw=ph*aspect;
+        var px=(canvas.width-pw)/2,py=(canvas.height-ph)/2-canvas.height*0.05;
+        ctx.save();
+        ctx.shadowColor='rgba(0,0,0,0.5)';ctx.shadowBlur=50;ctx.shadowOffsetY=15;
+        ctx.drawImage(pImg,px,py,pw,ph);
+        ctx.restore();
+        var compositeUrl=canvas.toDataURL('image/png');
+        showImagineResult(compositeUrl,prompt,seed,true);
+      };
+      pImg.onerror=function(){showImagineResult(imgUrl,prompt,seed,false);};
+      pImg.src=imagineUploadData;
+    } else {
+      showImagineResult(imgUrl,prompt,seed,false);
+    }
   };
   img.onerror=function(){
-    document.getElementById('imagine-output').innerHTML='<div class="alert error show">Image generation failed — please try again.</div>';
+    document.getElementById('imagine-output').innerHTML='<div class="alert error show">Image generation failed — please try again in a few seconds.</div>';
     setBtnLoading('imagine-btn','imagine-spinner','imagine-btn-text',null,'🖼 Generate image');
   };
   img.src=imgUrl;
+}
+
+async function showImagineResult(src,prompt,seed,isComposite){
+  var shortPrompt=prompt.substring(0,30).replace(/[^a-z0-9]/gi,'-').toLowerCase();
+  var isDataUrl=src.startsWith('data:');
+  document.getElementById('imagine-output').innerHTML=
+    '<img src="'+src+'" style="width:100%;border-radius:var(--radius-sm);display:block;margin-bottom:10px" alt="Generated image"/>'+
+    (isComposite?'<div style="font-size:11.5px;color:var(--success);background:var(--success-light);padding:5px 12px;border-radius:20px;display:inline-block;margin-bottom:10px">✓ Product composited onto AI background</div><br>':'')+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">'+
+    (isDataUrl
+      ?'<button onclick="downloadCanvas(this)" style="flex:1;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font-b)">⬇ Download image</button>'
+      :'<a href="'+src+'" download="suukieai-'+shortPrompt+'.jpg" target="_blank" style="flex:1;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font-b);display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none">⬇ Download image</a>')+
+    '<button onclick="handleImagine()" style="padding:10px 14px;border:1px solid var(--border);background:transparent;border-radius:var(--radius-sm);font-size:12.5px;color:var(--ink2);cursor:pointer;font-family:var(--font-b)">↺ New</button>'+
+    '</div>'+
+    '<div style="margin-top:10px;background:var(--bg2);border-radius:var(--radius-sm);padding:10px 12px">'+
+    '<div style="font-size:11px;font-weight:500;color:var(--ink3);margin-bottom:3px">SEED · save to recreate</div>'+
+    '<div style="font-size:12px;color:var(--ink);font-family:monospace">'+seed+'</div>'+
+    '</div>';
+  await incrementUsage();
+  await saveHistory('imagine',prompt,'','','','',src.startsWith('data:')?'[composite]':src);
+  setBtnLoading('imagine-btn','imagine-spinner','imagine-btn-text',null,'🖼 Generate image');
+}
+
+function downloadCanvas(btn){
+  var img=document.querySelector('#imagine-output img');
+  var a=document.createElement('a');
+  a.href=img.src;
+  a.download='suukieai-image.png';
+  a.click();
 }
 
 function showAlert(id,msg){var el=document.getElementById(id);el.textContent=msg;el.classList.add('show');}
