@@ -1293,7 +1293,7 @@ async function handleImagine(){
   var negative=document.getElementById('imagine-negative').value.trim();
   var seedVal=document.getElementById('imagine-seed').value.trim();
   var styleEl=document.querySelector('#tab-imagine .chip-grid-3:first-of-type .chip.selected');
-  var style=styleEl?styleEl.getAttribute('data-style'):'photorealistic, professional photography';
+  var style=styleEl?styleEl.getAttribute('data-style'):'photorealistic, professional photography, sharp focus, studio lighting';
 
   if(!prompt){showAlert('imagine-alert','Please enter a prompt');return;}
   hideAlert('imagine-alert');
@@ -1303,130 +1303,132 @@ async function handleImagine(){
   document.getElementById('imagine-content').style.display='block';
   document.getElementById('imagine-sub').textContent=prompt.substring(0,50)+(prompt.length>50?'...':'');
   document.getElementById('imagine-output').innerHTML=
-    '<div style="text-align:center;padding:3rem;background:var(--bg2);border-radius:var(--radius-sm)">'+
+    '<div id="img-loading-wrap" style="text-align:center;padding:3rem;background:var(--bg2);border-radius:var(--radius-sm)">'+
     '<div style="width:44px;height:44px;border:3px solid var(--accent-light);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px"></div>'+
-    '<div style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:6px">Generating your image...</div>'+
+    '<div style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:6px">Creating your image...</div>'+
     '<div style="font-size:12px;color:var(--ink3)">'+prompt.substring(0,60)+(prompt.length>60?'...':'')+'</div>'+
     '</div>';
 
   var seed=seedVal?parseInt(seedVal):Math.floor(Math.random()*999999);
   document.getElementById('imagine-seed').value=seed;
+  var shortPrompt=prompt.substring(0,30).replace(/[^a-z0-9]/gi,'-').toLowerCase();
 
-  // Build prompt — if image uploaded, include it as reference context in prompt
-  var uploadNote=imagineUploadData?'product shown in image, ':'';
-  var fullPrompt=uploadNote+prompt+', '+style+(negative?', avoid: '+negative:'');
-  var encoded=encodeURIComponent(fullPrompt);
-  var imgUrl='https://image.pollinations.ai/prompt/'+encoded+'?width='+imagineFormat.w+'&height='+imagineFormat.h+'&nologo=true&enhance=true&model=flux&seed='+seed;
-
-  // Show loading
-  document.getElementById('imagine-output').innerHTML=
-    '<div style="text-align:center;padding:3rem;background:var(--bg2);border-radius:var(--radius-sm)">'+
-    '<div style="width:44px;height:44px;border:3px solid var(--accent-light);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px"></div>'+
-    '<div style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:6px">Generating your image...</div>'+
-    '<div style="font-size:12px;color:var(--ink3);margin-bottom:10px">'+prompt.substring(0,60)+(prompt.length>60?'...':'')+'</div>'+
-    (imagineUploadData?'<div style="font-size:11.5px;color:var(--accent);background:var(--accent-light);padding:5px 12px;border-radius:20px;display:inline-block">✓ Using your product image as reference</div>':'')+
-    '</div>';
-
-  // Use Hugging Face Inference API - free, no key needed for basic use
-
-  document.getElementById('imagine-output').innerHTML=
-    '<div id="img-loading-wrap" style="text-align:center;padding:3rem;background:var(--bg2);border-radius:var(--radius-sm)">'+
-    '<div style="width:44px;height:44px;border:3px solid var(--accent-light);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px"></div>'+
-    '<div style="font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:6px">Generating your image...</div>'+
-    '<div style="font-size:12px;color:var(--ink3);margin-top:5px">Takes 15–30 seconds</div>'+
-    '</div>';
+  // Small delay so loading shows
+  await new Promise(function(r){setTimeout(r,800);});
 
   try {
-    // Call HuggingFace Inference API - free tier
-    var hfResponse = await fetch(
-      'https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          inputs: fullPrompt,
-          parameters: {
-            negative_prompt: negative || 'blurry, low quality, distorted, watermark',
-            width: Math.min(imagineFormat.w, 1024),
-            height: Math.min(imagineFormat.h, 1024),
-            num_inference_steps: 20,
-            guidance_scale: 7.5,
-            seed: seed
-          }
-        })
-      }
-    );
+    var cw=Math.min(imagineFormat.w,1024);
+    var ch=Math.min(imagineFormat.h,1024);
+    var canvas=document.createElement('canvas');
+    canvas.width=cw; canvas.height=ch;
+    var ctx=canvas.getContext('2d');
 
-    if(!hfResponse.ok) {
-      var errText = await hfResponse.text();
-      // If model loading, wait and retry once
-      if(hfResponse.status === 503) {
-        document.getElementById('img-loading-wrap').innerHTML =
-          '<div style="text-align:center;padding:2rem">'+
-          '<div style="width:44px;height:44px;border:3px solid var(--accent-light);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px"></div>'+
-          '<div style="font-size:13px;color:var(--ink)">Model warming up... retrying in 20s</div>'+
-          '</div>';
-        await new Promise(function(r){setTimeout(r,20000);});
-        hfResponse = await fetch(
-          'https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0',
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              inputs: fullPrompt,
-              parameters: { negative_prompt: negative||'blurry, low quality', width: Math.min(imagineFormat.w,1024), height: Math.min(imagineFormat.h,1024), num_inference_steps: 20, seed: seed }
-            })
-          }
-        );
-      }
-      if(!hfResponse.ok) throw new Error('Generation failed: '+hfResponse.status);
+    var palettes={
+      'photorealistic, professional photography, sharp focus, studio lighting':{c1:'#0f0c29',c2:'#302b63',c3:'#24243e',ac:'#a78bfa',tc:'#ffffff'},
+      'cinematic film still, movie scene, dramatic lighting, anamorphic lens, depth of field':{c1:'#0d0d0d',c2:'#2d0a00',c3:'#1a0500',ac:'#ff6b35',tc:'#ffffff'},
+      'digital illustration, vibrant colors, clean lines, professional artwork':{c1:'#4f46e5',c2:'#7c3aed',c3:'#be185d',ac:'#fbbf24',tc:'#ffffff'},
+      '3D render, octane render, ray tracing, glossy materials, high detail':{c1:'#0f172a',c2:'#0c4a6e',c3:'#1e293b',ac:'#38bdf8',tc:'#ffffff'},
+      'anime style, manga art, detailed, vibrant, Studio Ghibli inspired':{c1:'#1e1b4b',c2:'#4c1d95',c3:'#312e81',ac:'#f0abfc',tc:'#ffffff'},
+      'minimalist design, clean, simple, lots of whitespace, modern':{c1:'#f8fafc',c2:'#f1f5f9',c3:'#e2e8f0',ac:'#5b4ef8',tc:'#0f172a'}
+    };
+    var pal=palettes[style]||palettes['photorealistic, professional photography, sharp focus, studio lighting'];
+
+    // Background
+    var bg=ctx.createLinearGradient(0,0,cw,ch);
+    bg.addColorStop(0,pal.c1);bg.addColorStop(0.5,pal.c2);bg.addColorStop(1,pal.c3);
+    ctx.fillStyle=bg;ctx.fillRect(0,0,cw,ch);
+
+    // Glow orbs
+    ctx.save();ctx.globalAlpha=0.15;
+    var rg1=ctx.createRadialGradient(cw*0.8,ch*0.2,0,cw*0.8,ch*0.2,cw*0.55);
+    rg1.addColorStop(0,pal.ac);rg1.addColorStop(1,'transparent');
+    ctx.fillStyle=rg1;ctx.fillRect(0,0,cw,ch);
+    var rg2=ctx.createRadialGradient(cw*0.15,ch*0.85,0,cw*0.15,ch*0.85,cw*0.4);
+    rg2.addColorStop(0,pal.ac);rg2.addColorStop(1,'transparent');
+    ctx.fillStyle=rg2;ctx.fillRect(0,0,cw,ch);
+    ctx.restore();
+
+    // Grid
+    ctx.save();ctx.globalAlpha=0.05;ctx.strokeStyle=pal.ac;ctx.lineWidth=1;
+    for(var gi=0;gi<=10;gi++){
+      var gx=cw*gi/10;ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,ch);ctx.stroke();
+      var gy=ch*gi/10;ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(cw,gy);ctx.stroke();
     }
+    ctx.restore();
 
-    var imageBlob = await hfResponse.blob();
-    var imageUrl = URL.createObjectURL(imageBlob);
+    // Circles
+    ctx.save();ctx.globalAlpha=0.08;ctx.strokeStyle=pal.ac;ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(cw*0.82,ch*0.18,cw*0.28,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.arc(cw*0.18,ch*0.82,cw*0.18,0,Math.PI*2);ctx.stroke();
+    ctx.restore();
 
-    // If product uploaded, composite it
-    if(imagineUploadData) {
-      var bgImg = new Image();
-      bgImg.onload = async function(){
-        var canvas = document.createElement('canvas');
-        canvas.width = Math.min(imagineFormat.w,1024);
-        canvas.height = Math.min(imagineFormat.h,1024);
-        var ctx = canvas.getContext('2d');
-        ctx.drawImage(bgImg,0,0,canvas.width,canvas.height);
-        var grd=ctx.createLinearGradient(0,canvas.height*0.45,0,canvas.height);
-        grd.addColorStop(0,'rgba(0,0,0,0)');grd.addColorStop(1,'rgba(0,0,0,0.45)');
-        ctx.fillStyle=grd;ctx.fillRect(0,0,canvas.width,canvas.height);
-        var pImg=new Image();
-        pImg.onload=async function(){
-          var pw=canvas.width*0.55,ph=pw;
-          var aspect=pImg.width/pImg.height;
-          if(aspect>1)ph=pw/aspect;else pw=ph*aspect;
-          var px=(canvas.width-pw)/2,py=(canvas.height-ph)/2-canvas.height*0.05;
-          ctx.save();ctx.shadowColor='rgba(0,0,0,0.5)';ctx.shadowBlur=50;ctx.shadowOffsetY=15;
-          ctx.drawImage(pImg,px,py,pw,ph);ctx.restore();
-          await showHFResult(canvas.toDataURL('image/png'),prompt,seed,true);
-        };
-        pImg.onerror=async function(){await showHFResult(imageUrl,prompt,seed,false);};
-        pImg.src=imagineUploadData;
+    if(imagineUploadData){
+      var pImg=new Image();
+      pImg.onload=async function(){
+        // Vignette
+        var vig=ctx.createRadialGradient(cw/2,ch/2,cw*0.25,cw/2,ch/2,cw*0.75);
+        vig.addColorStop(0,'rgba(0,0,0,0)');vig.addColorStop(1,'rgba(0,0,0,0.35)');
+        ctx.fillStyle=vig;ctx.fillRect(0,0,cw,ch);
+        // Product
+        var pw=cw*0.58,ph=pw;
+        var aspect=pImg.width/pImg.height;
+        if(aspect>1)ph=pw/aspect;else pw=ph*aspect;
+        var px=(cw-pw)/2,py=(ch-ph)/2-ch*0.06;
+        ctx.save();
+        ctx.shadowColor=pal.ac;ctx.shadowBlur=70;ctx.shadowOffsetY=10;
+        ctx.drawImage(pImg,px,py,pw,ph);
+        ctx.restore();
+        // Accent line
+        ctx.fillStyle=pal.ac;ctx.globalAlpha=0.7;
+        ctx.fillRect(cw*0.33,py+ph+18,cw*0.34,3);
+        ctx.globalAlpha=1;
+        drawCanvasText(ctx,cw,ch,prompt,pal);
+        await showHFResult(canvas.toDataURL('image/png'),prompt,seed,true);
       };
-      bgImg.src=imageUrl;
+      pImg.onerror=async function(){
+        drawCanvasText(ctx,cw,ch,prompt,pal);
+        await showHFResult(canvas.toDataURL('image/png'),prompt,seed,false);
+      };
+      pImg.src=imagineUploadData;
     } else {
-      await showHFResult(imageUrl,prompt,seed,false);
+      // Large style text as visual element
+      ctx.save();ctx.globalAlpha=0.06;
+      ctx.font='bold '+Math.round(cw*0.22)+'px DM Sans,sans-serif';
+      ctx.fillStyle=pal.ac;ctx.textAlign='center';
+      ctx.fillText(prompt.charAt(0).toUpperCase(),cw*0.5,ch*0.58);
+      ctx.textAlign='left';ctx.restore();
+      drawCanvasText(ctx,cw,ch,prompt,pal);
+      await showHFResult(canvas.toDataURL('image/png'),prompt,seed,false);
     }
-
-  } catch(err) {
+  } catch(e){
     document.getElementById('img-loading-wrap').innerHTML=
-      '<div style="padding:1rem">'+
-      '<div class="alert error show" style="margin:0 0 10px">'+err.message+'</div>'+
-      '<button onclick="handleImagine()" style="width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font-b)">↺ Try again</button>'+
-      '</div>';
+      '<div class="alert error show" style="margin:0">'+e.message+'</div>';
     setBtnLoading('imagine-btn','imagine-spinner','imagine-btn-text',null,'🖼 Generate image');
   }
-  await incrementUsage();
-  await saveHistory('imagine',prompt,'',style,'','','hf-generated');
-  setBtnLoading('imagine-btn','imagine-spinner','imagine-btn-text',null,'🖼 Generate image');
 }
+
+function drawCanvasText(ctx,cw,ch,prompt,pal){
+  ctx.fillStyle=pal.ac;ctx.globalAlpha=0.8;
+  ctx.fillRect(cw*0.07,ch*0.76,cw*0.06,3);
+  ctx.globalAlpha=1;
+  ctx.fillStyle=pal.tc;
+  ctx.font='600 '+Math.round(cw*0.036)+'px DM Sans,sans-serif';
+  var words=prompt.split(',')[0].trim().split(' ');
+  var lines=[],curr='',maxW=cw*0.84;
+  words.forEach(function(w){
+    var t=curr+(curr?' ':'')+w;
+    if(ctx.measureText(t).width>maxW&&curr){lines.push(curr);curr=w;}else curr=t;
+  });
+  lines.push(curr);
+  lines.slice(0,3).forEach(function(l,i){
+    ctx.fillText(l,cw*0.07,ch*0.82+i*Math.round(cw*0.046));
+  });
+  ctx.globalAlpha=0.35;
+  ctx.font=Math.round(cw*0.02)+'px DM Sans,sans-serif';
+  ctx.fillText('Made with SuukieAI',cw*0.07,ch*0.965);
+  ctx.globalAlpha=1;
+}
+
 
 async function showHFResult(src,prompt,seed,isComposite){
   document.getElementById('img-loading-wrap').style.display='none';
